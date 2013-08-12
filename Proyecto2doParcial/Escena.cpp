@@ -16,16 +16,21 @@
 #include <iostream>
 using namespace std;
 
-int objeto=0;
+
 GLfloat ancho_plano=900.0;
 GLfloat alto_plano=700.0;
-
-
-
-
-
-//camara
+GLfloat x_Spin=0.0f;
+GLfloat y_Spin=0.0f;
+GLfloat z_Spin=0.0f;
+GLfloat xPosicion = 0.0f;
+GLfloat yPosicion = 0.0f;
 GLfloat zPosicion = 10.0f;
+
+
+
+
+
+
 
 
 
@@ -41,42 +46,42 @@ GLuint _displayListId_AreaBlanca;
 
 void dibujarEspacioNegro() {
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(0.05f,0.77f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(1.50f,0.0f,0.0f);
 	glVertex3f(1.5f,0.3f,0.0f);
 	glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(0.05f,0.77f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(0.0f,0.0f,-1.5f);
 	glVertex3f(0.0f,0.3f,-1.5f);
 	glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(0.05f,0.77f,1.0f);
 	glVertex3f(1.5f,0.0f,0.0f);
 	glVertex3f(1.5f,0.0f,-1.5f);
 	glVertex3f(1.5f,0.3f,-1.5f);
 	glVertex3f(1.5f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(0.05f,0.77f,1.0f);
 	glVertex3f(0.0f,0.0f,-1.5f);
 	glVertex3f(1.50f,0.0f,-1.5f);
 	glVertex3f(1.5f,0.3f,-1.5f);
 	glVertex3f(0.0f,0.3f,-1.5f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(0.05f,0.77f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(1.50f,0.0f,0.0f);
 	glVertex3f(1.5f,0.0f,-1.5f);
 	glVertex3f(0.0f,0.0f,-1.5f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.0f,0.0f,0.0f);
+	glColor3f(0.05f,0.77f,1.0f);
 	glVertex3f(0.0f,0.3f,0.0f);
 	glVertex3f(1.50f,0.3f,0.0f);
 	glVertex3f(1.5f,0.3f,-1.5f);
@@ -85,35 +90,35 @@ void dibujarEspacioNegro() {
 } 
 void dibujarEspacioBlanco() { 
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+glColor3f(1.0f,1.0f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(1.50f,0.0f,0.0f);
 	glVertex3f(1.5f,0.3f,0.0f);
 	glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(1.0f,1.0f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(0.0f,0.0f,-1.5f);
 	glVertex3f(0.0f,0.3f,-1.5f);
 	glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(1.0f,1.0f,1.0f);
 	glVertex3f(1.5f,0.0f,0.0f);
 	glVertex3f(1.5f,0.0f,-1.5f);
 	glVertex3f(1.5f,0.3f,-1.5f);
 	glVertex3f(1.5f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(1.0f,1.0f,1.0f);
 	glVertex3f(0.0f,0.0f,-1.5f);
 	glVertex3f(1.50f,0.0f,-1.5f);
 	glVertex3f(1.5f,0.3f,-1.5f);
 	glVertex3f(0.0f,0.3f,-1.5f);
 	glEnd();
 	glBegin(GL_QUADS);
-	glColor3f(0.05f,0.05f,0.05f);
+	glColor3f(1.0f,1.0f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(1.50f,0.0f,0.0f);
 	glVertex3f(1.5f,0.0f,-1.5f);
@@ -212,11 +217,88 @@ void display (void){
 
 
 	glColor3f(1.0,0.0,0.0);
+	// manipular escena
+	glRotatef(x_Spin,1.0,0.0,0.0);
+	glRotatef(y_Spin,0.0,1.0,0.0);
+	glRotatef(z_Spin,0.0,0.0,1.0);
+	glTranslatef(xPosicion,yPosicion,0);
+
+
 	glPushMatrix();	
 	
-	(void)dibujarTablero();
+	
+
+	dibujarTablero();
 
 	glPopMatrix();
+
+
+	glPushMatrix();
+	
+	glColor3f(0.945f,0.552f,0.0196f);
+	
+	glTranslatef(-3.0,3.0,3.0);
+	glutSolidSphere(0.5,50,50);
+
+	glPopMatrix();
+	
+
+	glPushMatrix();	
+	
+	glColor3f(0.0f,0.6313f,0.796f);
+	glTranslatef(3.0,3.0,3.0);
+	glutSolidTorus(0.2,0.5,50,50);
+	
+	glPopMatrix();
+
+	glPushMatrix();	
+	glColor3f(0.89f,0.254f,0.192f);
+	glTranslatef(0.0,3.0,0.0);
+	glutSolidTeapot(1.0);
+	
+	glPopMatrix();
+
+	glPushMatrix();	
+	glColor3f(0.89f,0.254f,0.192f);
+	glTranslatef(1.0,3.0,3.0);
+	
+	glutSolidCube(1.0);
+	glPopMatrix();
+
+
+	//Obelisco
+	glPushMatrix();	
+	
+	glColor3f(0.003921569f,0.250980392f,0.643137255f);
+	glTranslatef(5.0,0.0,0.0);
+	glRotatef(-90.0f,1.0,0.0f,0.0f);
+	GLUquadricObj * qobj;
+	qobj = gluNewQuadric();
+	gluQuadricDrawStyle(qobj,GLU_FLAT);
+	
+	
+	gluCylinder(qobj, 0.50, 0.25, 5.0, 4,4);
+
+	
+
+	
+	
+	glPopMatrix();
+
+	glPushMatrix();	
+	
+	glColor3f(0.003921569f,0.250980392f,0.643137255f);
+	glTranslatef(5.0,5.0,0.0);
+	glRotatef(-90.0f,1.0,0.0f,0.0f);
+	
+	glutSolidCone(0.25,0.4,4,4);
+
+	
+	
+	glPopMatrix();
+
+	
+
 	glutSwapBuffers();
 
 }
@@ -228,7 +310,8 @@ void display (void){
 * Autores: Denisse Pintado, Roger Granda, Gianni Carlo
 */
 void init (void){
-	glClearColor(1.0,1.0,1.0,0.0);
+	
+	glClearColor(1.0f,1.0f,1.0f,0.0f);
 	glShadeModel(GL_SMOOTH);
 
 	// habilitar luz
@@ -263,16 +346,44 @@ void init (void){
 */
 void keyboard( unsigned char key, int x, int y ){
 	switch ( key ) {
-
-	case 'l': // ZOOM OUT		
-		zPosicion=zPosicion-0.1;			
-		break;
-	case 'o':	// ZOOM IN		
-		zPosicion=zPosicion+0.1;				
-		break;
-
-	default:		
-		break;
+		case 'l':
+			zPosicion=zPosicion-0.1;										
+			break;
+		case 'o':
+			zPosicion=zPosicion+0.1;										
+			break;
+		case 'q':
+			z_Spin=z_Spin+5.0;	
+			if (z_Spin>360.0)
+				z_Spin=z_Spin-360.0;								
+			break;
+		case 'e':									
+			z_Spin=z_Spin-5.0;	
+			if (z_Spin<-360)
+				z_Spin=z_Spin+360.0;					
+			break;
+		case 'a':
+			y_Spin=y_Spin+5.0;	
+			if (y_Spin>360.0)
+				y_Spin=y_Spin-360.0;								
+			break;
+		case 'd':									
+			y_Spin=y_Spin-5.0;	
+			if (y_Spin<-360)
+				y_Spin=y_Spin+360.0;					
+			break;
+		case 'w':
+			x_Spin=x_Spin+5.0;	
+			if (x_Spin>360.0)
+				x_Spin=x_Spin-360.0;								
+			break;
+		case 's':									
+			x_Spin=x_Spin-5.0;	
+			if (x_Spin<-360)
+				x_Spin=x_Spin+360.0;					
+			break;
+		default:		
+			break;
 	}
 	glutPostRedisplay();	
 }
@@ -284,10 +395,24 @@ void keyboard( unsigned char key, int x, int y ){
 * Autor: Gianni Carlo
 */
 void handleSpecialKeypress(int key, int x, int y) {
-
+	switch ( key ) {
+		case GLUT_KEY_UP:									
+			yPosicion=yPosicion+0.1;				
+			break;
+		case GLUT_KEY_DOWN:													
+			yPosicion=yPosicion-0.1;
+			break;
+		case GLUT_KEY_RIGHT:									
+			xPosicion=xPosicion+0.1;		
+			break;
+		case GLUT_KEY_LEFT:									
+			xPosicion=xPosicion-0.1;		
+			break;
+		default:									
+			break;
+	}
 	glutPostRedisplay();
 }
-
 /*
 * Función: main
 * Parámetros: int argc, char** argv
