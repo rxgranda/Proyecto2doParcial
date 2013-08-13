@@ -24,7 +24,7 @@ GLfloat y_Spin=0.0f;
 GLfloat z_Spin=0.0f;
 GLfloat xPosicion = 0.0f;
 GLfloat yPosicion = 0.0f;
-GLfloat zPosicion = 10.0f;
+GLfloat zPosicion = 13.0f;
 
 
 
@@ -36,8 +36,8 @@ GLfloat zPosicion = 10.0f;
 
 //luz
 GLfloat  whiteLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
-GLfloat  sourceLight[] = { 0.8f, 0.8f, 0.8f, 1.0f };
-GLfloat	 lightPos[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+GLfloat  spot_direction[] = { 0.0f,-1.0f, 0.0f };
+GLfloat	 lightPos[] = { 0.0f, 8.0f, 0.0f,1.0f };
 
 // lista tablero
 GLuint _displayListId_AreaNegra; 
@@ -213,16 +213,28 @@ void reshape(int w, int h){
 void display (void){
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
-	gluLookAt(0.0,5.0,zPosicion,0.0,0.0,0.0,0.0,1.0,0.0);
+	gluLookAt(0.0,5.0,zPosicion,0.0,3.0,0.0,0.0,1.0,0.0);
 
+	
 
 	glColor3f(1.0,0.0,0.0);
+	glPushMatrix();
 	// manipular escena
 	glRotatef(x_Spin,1.0,0.0,0.0);
 	glRotatef(y_Spin,0.0,1.0,0.0);
 	glRotatef(z_Spin,0.0,0.0,1.0);
+	
 	glTranslatef(xPosicion,yPosicion,0);
 
+	glPushMatrix();
+	//glTranslatef(5.0f,0.0f,5.0f);
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 15.0);
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction);
+	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.1);
+	glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
+	glEnable(GL_LIGHT0);
+
+	glPopMatrix();
 
 	glPushMatrix();	
 	
@@ -297,8 +309,25 @@ void display (void){
 	
 	glPopMatrix();
 
-	
+	//techo
 
+	glPushMatrix();	
+	glTranslatef(-6.0f,8.0f,6.0f);
+	glBegin(GL_QUADS);
+	glColor3f(0.05f,0.77f,1.0f);
+	glVertex3f(0.0f,0.0f,0.0f);
+	glVertex3f(12.0f,0.0f,0.0f);
+	glVertex3f(12.0f,0.0f,-12.0f);
+	glVertex3f(0.0f,0.0f,-12.0f);
+	glEnd();
+
+	
+	
+	glPopMatrix();
+
+	
+	
+	glPopMatrix();
 	glutSwapBuffers();
 
 }
@@ -318,8 +347,8 @@ void init (void){
 	glEnable(GL_LIGHTING);
 
 	// configurar y habilitar luz
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,whiteLight);
-	glLightfv(GL_LIGHT0,GL_DIFFUSE,sourceLight);
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT,whiteLight);
+	//glLightfv(GL_LIGHT0,GL_DIFFUSE,sourceLight);
 	glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
 	glEnable(GL_LIGHT0);
 
