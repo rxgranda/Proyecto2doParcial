@@ -3,9 +3,10 @@
 *
 * Integrantes:
 *
-*   Gianni Carlo
-*   Roger Granda
 *   Denisse Pintado
+*	Gianni Carlo
+*   Roger Granda
+*   
 *
 *
 */
@@ -80,17 +81,57 @@ GLuint _displayListId_AreaBlanca;
 
 
 
-//Cubo
+//esfera 
+GLfloat x_SpinEsfera=0.0f;
+GLfloat y_SpinEsfera=0.0f;
+GLfloat z_SpinEsfera=0.0f;
+GLfloat xPosicionEsfera = -3.0;
+GLfloat yPosicionEsfera = 3.0;
+GLfloat zPosicionEsfera= 3.0f;
 
-//Cantina
+// Toroide
 
-//esfera
+GLfloat x_SpinToroide=0.0f;
+GLfloat y_SpinToroide=0.0f;
+GLfloat z_SpinToroide=0.0f;
+GLfloat xPosicionToroide= 3.0;
+GLfloat yPosicionToroide= 3.0;
+GLfloat zPosicionToroide= 3.0f;
 
 
-//mastil
+
+//Cubo  1.0,3.0,3.0
+GLfloat x_SpinCubo=0.0f;
+GLfloat y_SpinCubo=0.0f;
+GLfloat z_SpinCubo=0.0f;
+GLfloat xPosicionCubo = 1.0f;
+GLfloat yPosicionCubo = 3.0f;
+GLfloat zPosicionCubo = 3.0f;
+
+//Cantina  
+GLfloat x_SpinTea=0.0f;
+GLfloat y_SpinTea=0.0f;
+GLfloat z_SpinTea=0.0f;
+GLfloat xPosicionTea = 0.0f;
+GLfloat yPosicionTea = 3.0f;
+GLfloat zPosicionTea = 0.0f;
+
+
+
+
+//mastil 5.0,0.0,0.0
+GLfloat x_SpinMastil=0.0f;
+GLfloat y_SpinMastil=0.0f;
+GLfloat z_SpinMastil=0.0f;
+GLfloat xPosicionMastil = 5.0f;
+GLfloat yPosicionMastil = 0.0f;
+GLfloat zPosicionMastil = 0.0f;
 
 
 //techo
+
+GLfloat yPosicionTecho = 0.0f;
+
 
 
 
@@ -502,35 +543,49 @@ void display (void){
 
 	glPopMatrix();
 
-
+	//esfera
 	glPushMatrix();
 	
 	glColor3f(0.945f,0.552f,0.0196f);
 	
-	glTranslatef(-3.0,3.0,3.0);
+	glTranslatef(xPosicionEsfera,yPosicionEsfera,zPosicionEsfera);
+	glRotatef(x_SpinEsfera,1.0f,0.0f,0.0f);
+	glRotatef(y_SpinEsfera,0.0f,1.0f,0.0f);
+	glRotatef(z_SpinEsfera,0.0f,0.0f,1.0f);
 	glutSolidSphere(0.5,50,50);
 
 	glPopMatrix();
 	
+	//toroide
 
 	glPushMatrix();	
 	
 	glColor3f(0.0f,0.6313f,0.796f);
-	glTranslatef(3.0,3.0,3.0);
+	glTranslatef(xPosicionToroide,yPosicionToroide, zPosicionToroide);
+	glRotatef(x_SpinToroide,1.0f,0.0f,0.0f);
+	glRotatef(y_SpinToroide,0.0f,1.0f,0.0f);
+	glRotatef(z_SpinToroide,0.0f,0.0f,1.0f);
 	glutSolidTorus(0.2,0.5,50,50);
 	
 	glPopMatrix();
-
+	//cantina
 	glPushMatrix();	
 	glColor3f(0.89f,0.254f,0.192f);
-	glTranslatef(0.0,3.0,0.0);
+	glTranslatef(xPosicionTea,yPosicionTea,zPosicionTea);
+	glRotatef(x_SpinTea,1.0f,0.0f,0.0f);
+	glRotatef(y_SpinTea,0.0f,1.0f,0.0f);
+	glRotatef(z_SpinTea,0.0f,0.0f,1.0f);
 	glutSolidTeapot(1.0);
 	
 	glPopMatrix();
+	//cubo
 
 	glPushMatrix();	
 	glColor3f(0.89f,0.254f,0.192f);
-	glTranslatef(1.0,3.0,3.0);
+	glTranslatef(xPosicionCubo,yPosicionCubo,zPosicionCubo);
+	glRotatef(x_SpinCubo,1.0f,0.0f,0.0f);
+	glRotatef(y_SpinCubo,0.0f,1.0f,0.0f);
+	glRotatef(z_SpinCubo,0.0f,0.0f,1.0f);
 	
 	glutSolidCube(1.0);
 	glPopMatrix();
@@ -540,8 +595,12 @@ void display (void){
 	glPushMatrix();	
 	
 	glColor3f(0.003921569f,0.250980392f,0.643137255f);
-	glTranslatef(5.0,0.0,0.0);
+	glTranslatef(xPosicionMastil,yPosicionMastil,zPosicionMastil);
 	glRotatef(-90.0f,1.0,0.0f,0.0f);
+	glRotatef(x_SpinMastil,1.0f,0.0f,0.0f);
+	glRotatef(y_SpinMastil,0.0f,1.0f,0.0f);
+	glRotatef(z_SpinMastil,0.0f,0.0f,1.0f);
+
 	GLUquadricObj * qobj;
 	qobj = gluNewQuadric();
 	gluQuadricDrawStyle(qobj,GLU_FLAT);
@@ -555,12 +614,16 @@ void display (void){
 	
 	glPopMatrix();
 
+	//hasta de obelisco
+
 	glPushMatrix();	
 	
 	glColor3f(0.003921569f,0.250980392f,0.643137255f);
-	glTranslatef(5.0,5.0,0.0);
+	glTranslatef(xPosicionMastil,yPosicionMastil+5.0f,zPosicionMastil);
 	glRotatef(-90.0f,1.0,0.0f,0.0f);
-	
+	glRotatef(x_SpinMastil,1.0f,0.0f,0.0f);
+	glRotatef(y_SpinMastil,0.0f,1.0f,0.0f);
+	glRotatef(z_SpinMastil,0.0f,0.0f,1.0f);
 	glutSolidCone(0.25,0.4,4,4);
 
 	
