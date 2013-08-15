@@ -28,13 +28,6 @@ GLfloat yPosicion = 0.0f;
 GLfloat zPosicion = 13.0f;
 
 
-
-
-
-
-
-
-
 //luz
 //GLfloat  whiteLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 
@@ -82,56 +75,60 @@ GLuint _displayListId_AreaBlanca;
 
 
 //esfera 
-GLfloat x_SpinEsfera=0.0f;
-GLfloat y_SpinEsfera=0.0f;
-GLfloat z_SpinEsfera=0.0f;
-GLfloat xPosicionEsfera = -3.0;
-GLfloat yPosicionEsfera = 3.0;
-GLfloat zPosicionEsfera= 3.0f;
+GLfloat *x_SpinEsfera;
+GLfloat *y_SpinEsfera;
+GLfloat *z_SpinEsfera;
+GLfloat *xPosicionEsfera;
+GLfloat *yPosicionEsfera;
+GLfloat *zPosicionEsfera;
+GLfloat *animacionEsfera;
 
 // Toroide
 
-GLfloat x_SpinToroide=0.0f;
-GLfloat y_SpinToroide=0.0f;
-GLfloat z_SpinToroide=0.0f;
-GLfloat xPosicionToroide= 3.0;
-GLfloat yPosicionToroide= 3.0;
-GLfloat zPosicionToroide= 3.0f;
+GLfloat *x_SpinToroide;
+GLfloat *y_SpinToroide;
+GLfloat *z_SpinToroide;
+GLfloat *xPosicionToroide;
+GLfloat *yPosicionToroide;
+GLfloat *zPosicionToroide;
+GLfloat *animacionToroide;
 
 
 
 //Cubo  1.0,3.0,3.0
-GLfloat x_SpinCubo=0.0f;
-GLfloat y_SpinCubo=0.0f;
-GLfloat z_SpinCubo=0.0f;
-GLfloat xPosicionCubo = 1.0f;
-GLfloat yPosicionCubo = 3.0f;
-GLfloat zPosicionCubo = 3.0f;
+GLfloat *x_SpinCubo;
+GLfloat *y_SpinCubo;
+GLfloat *z_SpinCubo;
+GLfloat *xPosicionCubo ;
+GLfloat *yPosicionCubo ;
+GLfloat *zPosicionCubo ;
+GLfloat *animacionCubo;
 
 //Cantina  
-GLfloat x_SpinTea=0.0f;
-GLfloat y_SpinTea=0.0f;
-GLfloat z_SpinTea=0.0f;
-GLfloat xPosicionTea = 0.0f;
-GLfloat yPosicionTea = 3.0f;
-GLfloat zPosicionTea = 0.0f;
+GLfloat *x_SpinTea;
+GLfloat *y_SpinTea;
+GLfloat *z_SpinTea;
+GLfloat *xPosicionTea;
+GLfloat *yPosicionTea;
+GLfloat *zPosicionTea;
+GLfloat *animacionTea;
 
 
 
 
 //mastil 5.0,0.0,0.0
-GLfloat x_SpinMastil=0.0f;
-GLfloat y_SpinMastil=0.0f;
-GLfloat z_SpinMastil=0.0f;
-GLfloat xPosicionMastil = 5.0f;
-GLfloat yPosicionMastil = 0.0f;
-GLfloat zPosicionMastil = 0.0f;
+GLfloat *x_SpinMastil;
+GLfloat *y_SpinMastil;
+GLfloat *z_SpinMastil;
+GLfloat *xPosicionMastil;
+GLfloat *yPosicionMastil;
+GLfloat *zPosicionMastil;
 
 
 //techo
 
-GLfloat yPosicionTecho = 0.0f;
-
+GLfloat yPosicionTecho = 8.0f;
+int objeto=4;
 
 
 
@@ -181,7 +178,7 @@ void dibujarEspacioNegro() {
 } 
 void dibujarEspacioBlanco() { 
 	glBegin(GL_QUADS);
-glColor3f(1.0f,1.0f,1.0f);
+	glColor3f(1.0f,1.0f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
 	glVertex3f(1.50f,0.0f,0.0f);
 	glVertex3f(1.5f,0.3f,0.0f);
@@ -295,32 +292,32 @@ void reshape(int w, int h){
 }
 
 void luces(void){
-	
+
 	glPushMatrix();
 	glTranslatef(light0x,0.0f,light0z);
-		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0);
-		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot0_direction);
-		glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.1);
-		glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
-		
+	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0);
+	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot0_direction);
+	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.1);
+	glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
+
 	glPopMatrix();
 
 	glPushMatrix();
-		glTranslatef(light1x,0.0f,light1z);			
+	glTranslatef(light1x,0.0f,light1z);			
 
-		glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
-		glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
-	
-	
-		glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.0);
-		glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.0);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light1_diffuse);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, light1_specular);
 
-		glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0);
-		glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot0_direction);
-		glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.1);
-		glLightfv(GL_LIGHT1,GL_POSITION,lightPos);
-		
+
+	glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.0);
+
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 25.0);
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, spot0_direction);
+	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 0.1);
+	glLightfv(GL_LIGHT1,GL_POSITION,lightPos);
+
 	glPopMatrix();
 
 
@@ -328,39 +325,39 @@ void luces(void){
 
 
 	glPushMatrix();
-		glTranslatef(light2x,0.0f,light2z);
+	glTranslatef(light2x,0.0f,light2z);
 
-		glLightfv(GL_LIGHT2, GL_DIFFUSE, light2_diffuse);
-		glLightfv(GL_LIGHT2, GL_SPECULAR, light2_specular);
-	
-	
-		glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 1.0);
-		glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.0);
-	
-		glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 25.0);
-		glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, spot2_direction);
-		glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 0.1);
-		glLightfv(GL_LIGHT2,GL_POSITION,lightPos);
-	
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, light2_diffuse);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, light2_specular);
+
+
+	glLightf(GL_LIGHT2, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT2, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT2, GL_QUADRATIC_ATTENUATION, 0.0);
+
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 25.0);
+	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, spot2_direction);
+	glLightf(GL_LIGHT2, GL_SPOT_EXPONENT, 0.1);
+	glLightfv(GL_LIGHT2,GL_POSITION,lightPos);
+
 	glPopMatrix();
 
 	glPushMatrix();
 
 
-		glTranslatef(light3x,0.0f,light3z);
+	glTranslatef(light3x,0.0f,light3z);
 
-		glLightfv(GL_LIGHT3, GL_DIFFUSE, light3_diffuse);
-		glLightfv(GL_LIGHT3, GL_SPECULAR, light3_specular);
-	
-		glLightf(GL_LIGHT3, GL_CONSTANT_ATTENUATION, 1.0);
-		glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT3, GL_QUADRATIC_ATTENUATION, 0.0);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, light3_diffuse);
+	glLightfv(GL_LIGHT3, GL_SPECULAR, light3_specular);
 
-		glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 25.0);
-		glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, spot3_direction);
-		glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 0.1);
-		glLightfv(GL_LIGHT3,GL_POSITION,lightPos);
+	glLightf(GL_LIGHT3, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT3, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT3, GL_QUADRATIC_ATTENUATION, 0.0);
+
+	glLightf(GL_LIGHT3, GL_SPOT_CUTOFF, 25.0);
+	glLightfv(GL_LIGHT3, GL_SPOT_DIRECTION, spot3_direction);
+	glLightf(GL_LIGHT3, GL_SPOT_EXPONENT, 0.1);
+	glLightfv(GL_LIGHT3,GL_POSITION,lightPos);
 
 	glPopMatrix();
 
@@ -368,34 +365,34 @@ void luces(void){
 	glTranslatef(light4x,0.0f,light4z);
 
 	glLightfv(GL_LIGHT4, GL_DIFFUSE, light4_diffuse);
-		glLightfv(GL_LIGHT4, GL_SPECULAR, light4_specular);
-	
-		glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 1.0);
-		glLightf(GL_LIGHT4, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT4, GL_QUADRATIC_ATTENUATION, 0.0);
+	glLightfv(GL_LIGHT4, GL_SPECULAR, light4_specular);
 
-		glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 25.0);
-		glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, spot4_direction);
-		glLightf(GL_LIGHT4, GL_SPOT_EXPONENT, 0.1);
-		glLightfv(GL_LIGHT4,GL_POSITION,lightPos);
-		
+	glLightf(GL_LIGHT4, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT4, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT4, GL_QUADRATIC_ATTENUATION, 0.0);
+
+	glLightf(GL_LIGHT4, GL_SPOT_CUTOFF, 25.0);
+	glLightfv(GL_LIGHT4, GL_SPOT_DIRECTION, spot4_direction);
+	glLightf(GL_LIGHT4, GL_SPOT_EXPONENT, 0.1);
+	glLightfv(GL_LIGHT4,GL_POSITION,lightPos);
+
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslatef(light5x,0.0f,light5z);
 
 	glLightfv(GL_LIGHT5, GL_DIFFUSE, light5_diffuse);
-		glLightfv(GL_LIGHT5, GL_SPECULAR, light5_specular);
-	
-		glLightf(GL_LIGHT5, GL_CONSTANT_ATTENUATION, 1.0);
-		glLightf(GL_LIGHT5, GL_LINEAR_ATTENUATION, 0.0);
-		glLightf(GL_LIGHT5, GL_QUADRATIC_ATTENUATION, 0.0);
+	glLightfv(GL_LIGHT5, GL_SPECULAR, light5_specular);
 
-		glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, 25.0);
-		glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, spot5_direction);
-		glLightf(GL_LIGHT5, GL_SPOT_EXPONENT, 0.1);
-		glLightfv(GL_LIGHT5,GL_POSITION,lightPos);
-		
+	glLightf(GL_LIGHT5, GL_CONSTANT_ATTENUATION, 1.0);
+	glLightf(GL_LIGHT5, GL_LINEAR_ATTENUATION, 0.0);
+	glLightf(GL_LIGHT5, GL_QUADRATIC_ATTENUATION, 0.0);
+
+	glLightf(GL_LIGHT5, GL_SPOT_CUTOFF, 25.0);
+	glLightfv(GL_LIGHT5, GL_SPOT_DIRECTION, spot5_direction);
+	glLightf(GL_LIGHT5, GL_SPOT_EXPONENT, 0.1);
+	glLightfv(GL_LIGHT5,GL_POSITION,lightPos);
+
 	glPopMatrix();
 
 
@@ -405,7 +402,7 @@ void luces(void){
 	glEnable(GL_LIGHT3);
 	glEnable(GL_LIGHT4);
 	glEnable(GL_LIGHT5);
-	
+
 }
 
 void lamparas(void){
@@ -413,104 +410,125 @@ void lamparas(void){
 
 	//lampara1
 	glPushMatrix();	
-		glTranslatef(light0x,7.9f,light0z);
-		glColor3f(1.0f,0.0f,0.0f);
-		GLfloat lampara1[] = {1.0, 1.0, 1.0};
-	
-		 glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara1);
-		glBegin(GL_QUADS);
-		
-			glVertex3f(-1.0f,0.0f,-1.0f);
-			glVertex3f(-1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,-1.0f);											
-		glEnd();
+	glTranslatef(light0x,7.9f,light0z);
+	glColor3f(1.0f,0.0f,0.0f);
+	GLfloat lampara1[] = {1.0, 1.0, 1.0};
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara1);
+	glBegin(GL_QUADS);
+
+	glVertex3f(-1.0f,0.0f,-1.0f);
+	glVertex3f(-1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,-1.0f);											
+	glEnd();
 
 	glPopMatrix();
 	//lampara2
 	glPushMatrix();	
-		glTranslatef(light1x,7.9f,light1z);
-		glColor3f(1.0f,0.0f,0.0f);
-		GLfloat lampara2[] = {1.0, 1.0, 1.0};
+	glTranslatef(light1x,7.9f,light1z);
+	glColor3f(1.0f,0.0f,0.0f);
+	GLfloat lampara2[] = {1.0, 1.0, 1.0};
 
-		 glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara2);
-		glBegin(GL_QUADS);
-		
-			glVertex3f(-1.0f,0.0f,-1.0f);
-			glVertex3f(-1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,-1.0f);											
-		glEnd();
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara2);
+	glBegin(GL_QUADS);
+
+	glVertex3f(-1.0f,0.0f,-1.0f);
+	glVertex3f(-1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,-1.0f);											
+	glEnd();
 
 	glPopMatrix();
 	//lampara3
 	glPushMatrix();	
-		glTranslatef(light2x,7.9f,light2z);
-		glColor3f(1.0f,0.0f,0.0f);
-		GLfloat lampara3[] = {1.0, 1.0, 1.0};
-	
-		 glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara3);
-		glBegin(GL_QUADS);
-		
-			glVertex3f(-1.0f,0.0f,-1.0f);
-			glVertex3f(-1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,-1.0f);											
-		glEnd();
+	glTranslatef(light2x,7.9f,light2z);
+	glColor3f(1.0f,0.0f,0.0f);
+	GLfloat lampara3[] = {1.0, 1.0, 1.0};
+
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara3);
+	glBegin(GL_QUADS);
+
+	glVertex3f(-1.0f,0.0f,-1.0f);
+	glVertex3f(-1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,-1.0f);											
+	glEnd();
 
 	glPopMatrix();
 	//lampara4
 	glPushMatrix();	
-		glTranslatef(light3x,7.9f,light3z);
-		glColor3f(1.0f,0.0f,0.0f);
-		GLfloat lampara4[] = {1.0, 1.0, 1.0};
+	glTranslatef(light3x,7.9f,light3z);
+	glColor3f(1.0f,0.0f,0.0f);
+	GLfloat lampara4[] = {1.0, 1.0, 1.0};
 
-		 glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara4);
-		glBegin(GL_QUADS);
-		
-			glVertex3f(-1.0f,0.0f,-1.0f);
-			glVertex3f(-1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,-1.0f);											
-		glEnd();
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara4);
+	glBegin(GL_QUADS);
+
+	glVertex3f(-1.0f,0.0f,-1.0f);
+	glVertex3f(-1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,-1.0f);											
+	glEnd();
 
 	glPopMatrix();
 	//lampara5
 	glPushMatrix();	
-		glTranslatef(light4x,7.9f,light4z);
-		glColor3f(1.0f,0.0f,0.0f);
-		GLfloat lampara5[] = {1.0, 1.0, 1.0};
+	glTranslatef(light4x,7.9f,light4z);
+	glColor3f(1.0f,0.0f,0.0f);
+	GLfloat lampara5[] = {1.0, 1.0, 1.0};
 
-		 glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara5);
-		glBegin(GL_QUADS);
-		
-			glVertex3f(-1.0f,0.0f,-1.0f);
-			glVertex3f(-1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,-1.0f);											
-		glEnd();
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara5);
+	glBegin(GL_QUADS);
+
+	glVertex3f(-1.0f,0.0f,-1.0f);
+	glVertex3f(-1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,-1.0f);											
+	glEnd();
 
 	glPopMatrix();
 	//lampara6
 	glPushMatrix();	
-		glTranslatef(light5x,7.9f,light5z);
-		glColor3f(1.0f,0.0f,0.0f);
-		GLfloat lampara6[] = {1.0, 1.0, 1.0};		
-		 glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara6);
-		glBegin(GL_QUADS);
-		
-			glVertex3f(-1.0f,0.0f,-1.0f);
-			glVertex3f(-1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,1.0f);
-			glVertex3f(1.0f,0.0f,-1.0f);											
-		glEnd();
-		
+	glTranslatef(light5x,7.9f,light5z);
+	glColor3f(1.0f,0.0f,0.0f);
+	GLfloat lampara6[] = {1.0, 1.0, 1.0};		
+	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara6);
+	glBegin(GL_QUADS);
+
+	glVertex3f(-1.0f,0.0f,-1.0f);
+	glVertex3f(-1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,1.0f);
+	glVertex3f(1.0f,0.0f,-1.0f);											
+	glEnd();
+
 	glPopMatrix();
 	//Deshabilitar emision
 	glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,no_emitir);
 }
 
+int debeRotar(float objetoX, float objetoZ){
+	float x=objetoX-(float)*xPosicionMastil;
+	float z=objetoZ-(float)*zPosicionMastil;
+	x=pow(x,2.0f);
+	z=pow(z,2.0f);
+	float dis=sqrt(x+z);
+	if (dis >=1.5)
+		return 0;
+	else 
+		return 1;
+}
 
+
+
+void animar(GLfloat * animar,GLfloat* posiciony){
+	glTranslatef(*xPosicionMastil,*posiciony,*zPosicionMastil);
+	glRotatef(*animar, 0.0f, 1.0f, 0.0f);		
+	glTranslatef(1.0,0.0,0.0);
+	*animar+=0.5f;
+	if((*animar)>360.0f)
+		*animar=0.0f;
+}
 /*
 * Procedimiento: display
 * Parámetros: -
@@ -522,7 +540,7 @@ void display (void){
 	glLoadIdentity();
 	gluLookAt(0.0,5.0,zPosicion,0.0,3.0,0.0,0.0,1.0,0.0);
 
-	
+
 
 	glColor3f(1.0,0.0,0.0);
 	glPushMatrix();
@@ -530,14 +548,14 @@ void display (void){
 	glRotatef(x_Spin,1.0,0.0,0.0);
 	glRotatef(y_Spin,0.0,1.0,0.0);
 	glRotatef(z_Spin,0.0,0.0,1.0);
-	
+
 	glTranslatef(xPosicion,yPosicion,0);
 
 	luces();
 
 	glPushMatrix();	
-	
-	
+
+
 
 	dibujarTablero();
 
@@ -545,99 +563,126 @@ void display (void){
 
 	//esfera
 	glPushMatrix();
-	
+
 	glColor3f(0.945f,0.552f,0.0196f);
-	
-	glTranslatef(xPosicionEsfera,yPosicionEsfera,zPosicionEsfera);
-	glRotatef(x_SpinEsfera,1.0f,0.0f,0.0f);
-	glRotatef(y_SpinEsfera,0.0f,1.0f,0.0f);
-	glRotatef(z_SpinEsfera,0.0f,0.0f,1.0f);
+	if(debeRotar((float)(*xPosicionEsfera),(float)(*zPosicionEsfera))==1){
+		animar(animacionEsfera,yPosicionEsfera);		
+	}else{
+		glTranslatef(*xPosicionEsfera,*yPosicionEsfera,*zPosicionEsfera);
+	}
+
+
+
+	glRotatef(*x_SpinEsfera,1.0f,0.0f,0.0f);
+	glRotatef(*y_SpinEsfera,0.0f,1.0f,0.0f);
+	glRotatef(*z_SpinEsfera,0.0f,0.0f,1.0f);
 	glutSolidSphere(0.5,50,50);
 
 	glPopMatrix();
-	
+
 	//toroide
 
 	glPushMatrix();	
-	
+
 	glColor3f(0.0f,0.6313f,0.796f);
-	glTranslatef(xPosicionToroide,yPosicionToroide, zPosicionToroide);
-	glRotatef(x_SpinToroide,1.0f,0.0f,0.0f);
-	glRotatef(y_SpinToroide,0.0f,1.0f,0.0f);
-	glRotatef(z_SpinToroide,0.0f,0.0f,1.0f);
+	if(debeRotar((float)(*xPosicionToroide),(float)(*zPosicionToroide))==1){
+		animar(animacionToroide,yPosicionToroide);		
+	}else{
+		glTranslatef(*xPosicionToroide,*yPosicionToroide,*zPosicionToroide);
+	}
+
+	glRotatef(*x_SpinToroide,1.0f,0.0f,0.0f);
+	glRotatef(*y_SpinToroide,0.0f,1.0f,0.0f);
+	glRotatef(*z_SpinToroide,0.0f,0.0f,1.0f);
 	glutSolidTorus(0.2,0.5,50,50);
-	
+
 	glPopMatrix();
+
 	//cantina
 	glPushMatrix();	
 	glColor3f(0.89f,0.254f,0.192f);
-	glTranslatef(xPosicionTea,yPosicionTea,zPosicionTea);
-	glRotatef(x_SpinTea,1.0f,0.0f,0.0f);
-	glRotatef(y_SpinTea,0.0f,1.0f,0.0f);
-	glRotatef(z_SpinTea,0.0f,0.0f,1.0f);
+	if(debeRotar((float)(*xPosicionTea),(float)(*zPosicionTea))==1){
+		animar(animacionTea,yPosicionTea);		
+	}else{
+		glTranslatef(*xPosicionTea,*yPosicionTea,*zPosicionTea);
+	}
+
+	glRotatef(*x_SpinTea,1.0f,0.0f,0.0f);
+	glRotatef(*y_SpinTea,0.0f,1.0f,0.0f);
+	glRotatef(*z_SpinTea,0.0f,0.0f,1.0f);
 	glutSolidTeapot(1.0);
-	
+
 	glPopMatrix();
 	//cubo
 
 	glPushMatrix();	
+
+
 	glColor3f(0.89f,0.254f,0.192f);
-	glTranslatef(xPosicionCubo,yPosicionCubo,zPosicionCubo);
-	glRotatef(x_SpinCubo,1.0f,0.0f,0.0f);
-	glRotatef(y_SpinCubo,0.0f,1.0f,0.0f);
-	glRotatef(z_SpinCubo,0.0f,0.0f,1.0f);
-	
+
+	if(debeRotar((float)(*xPosicionCubo),(float)(*zPosicionCubo))==1){
+		animar(animacionCubo,yPosicionCubo);		
+	}else{
+		glTranslatef(*xPosicionCubo,*yPosicionCubo,*zPosicionCubo);
+	}
+
+	glRotatef(*x_SpinCubo,1.0f,0.0f,0.0f);
+	glRotatef(*y_SpinCubo,0.0f,1.0f,0.0f);
+	glRotatef(*z_SpinCubo,0.0f,0.0f,1.0f);
+
+
+
 	glutSolidCube(1.0);
 	glPopMatrix();
 
 
 	//Obelisco
 	glPushMatrix();	
-	
+
 	glColor3f(0.003921569f,0.250980392f,0.643137255f);
-	glTranslatef(xPosicionMastil,yPosicionMastil,zPosicionMastil);
+	glTranslatef(*xPosicionMastil,*yPosicionMastil,*zPosicionMastil);
 	glRotatef(-90.0f,1.0,0.0f,0.0f);
-	glRotatef(x_SpinMastil,1.0f,0.0f,0.0f);
-	glRotatef(y_SpinMastil,0.0f,1.0f,0.0f);
-	glRotatef(z_SpinMastil,0.0f,0.0f,1.0f);
+	glRotatef(*x_SpinMastil,1.0f,0.0f,0.0f);
+	glRotatef(*y_SpinMastil,0.0f,1.0f,0.0f);
+	glRotatef(*z_SpinMastil,0.0f,0.0f,1.0f);
 
 	GLUquadricObj * qobj;
 	qobj = gluNewQuadric();
 	gluQuadricDrawStyle(qobj,GLU_FLAT);
-	
-	
+
+
 	gluCylinder(qobj, 0.50, 0.25, 5.0, 4,4);
 
-	
 
-	
-	
+
+
+
 	glPopMatrix();
 
 	//hasta de obelisco
 
 	glPushMatrix();	
-	
+
 	glColor3f(0.003921569f,0.250980392f,0.643137255f);
-	glTranslatef(xPosicionMastil,yPosicionMastil+5.0f,zPosicionMastil);
+	glTranslatef(*xPosicionMastil,*yPosicionMastil+5.0f,*zPosicionMastil);
 	glRotatef(-90.0f,1.0,0.0f,0.0f);
-	glRotatef(x_SpinMastil,1.0f,0.0f,0.0f);
-	glRotatef(y_SpinMastil,0.0f,1.0f,0.0f);
-	glRotatef(z_SpinMastil,0.0f,0.0f,1.0f);
+	glRotatef(*x_SpinMastil,1.0f,0.0f,0.0f);
+	glRotatef(*y_SpinMastil,0.0f,1.0f,0.0f);
+	glRotatef(*z_SpinMastil,0.0f,0.0f,1.0f);
 	glutSolidCone(0.25,0.4,4,4);
 
-	
-	
+
+
 	glPopMatrix();
 
 	//techo
 
-	
+
 
 
 
 	glPushMatrix();	
-	glTranslatef(-6.0f,8.0f,6.0f);
+	glTranslatef(-6.0f,yPosicionTecho,6.0f);
 	glBegin(GL_QUADS);
 	glColor3f(0.05f,0.77f,1.0f);
 	glVertex3f(0.0f,0.0f,0.0f);
@@ -646,17 +691,17 @@ void display (void){
 	glVertex3f(0.0f,0.0f,-12.0f);
 	glEnd();
 	glPopMatrix();
-	
-	
-	
-	
+
+
+
+
 	//lamparas
 	lamparas();
-	
-	
 
-	
-	
+
+
+
+
 	glPopMatrix();
 	glutSwapBuffers();
 
@@ -669,20 +714,21 @@ void display (void){
 * Autores: Denisse Pintado, Roger Granda, Gianni Carlo
 */
 void init (void){
-	
+
+
 	glClearColor(1.0f,1.0f,1.0f,0.0f);
 	glShadeModel(GL_SMOOTH);
 
 	// habilitar luz
 	glEnable(GL_LIGHTING);
-	 glEnable(GL_NORMALIZE);
+	glEnable(GL_NORMALIZE);
 
 	// configurar y habilitar luz
 	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT,whiteLight);
 	//glLightfv(GL_LIGHT0,GL_DIFFUSE,sourceLight);
 	/*glLightfv(GL_LIGHT1,GL_POSITION,lightPos);
 	glEnable(GL_LIGHT1);
-*/
+	*/
 	// Habilitar el rastreo de color
 	glEnable(GL_COLOR_MATERIAL);
 
@@ -690,7 +736,7 @@ void init (void){
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 
 	iniciarTablero();
-	
+
 
 
 
@@ -706,44 +752,44 @@ void init (void){
 */
 void keyboard( unsigned char key, int x, int y ){
 	switch ( key ) {
-		case 'l':
-			zPosicion=zPosicion-0.1;										
-			break;
-		case 'o':
-			zPosicion=zPosicion+0.1;										
-			break;
-		case 'q':
-			z_Spin=z_Spin+5.0;	
-			if (z_Spin>360.0)
-				z_Spin=z_Spin-360.0;								
-			break;
-		case 'e':									
-			z_Spin=z_Spin-5.0;	
-			if (z_Spin<-360)
-				z_Spin=z_Spin+360.0;					
-			break;
-		case 'a':
-			y_Spin=y_Spin+5.0;	
-			if (y_Spin>360.0)
-				y_Spin=y_Spin-360.0;								
-			break;
-		case 'd':									
-			y_Spin=y_Spin-5.0;	
-			if (y_Spin<-360)
-				y_Spin=y_Spin+360.0;					
-			break;
-		case 'w':
-			x_Spin=x_Spin+5.0;	
-			if (x_Spin>360.0)
-				x_Spin=x_Spin-360.0;								
-			break;
-		case 's':									
-			x_Spin=x_Spin-5.0;	
-			if (x_Spin<-360)
-				x_Spin=x_Spin+360.0;					
-			break;
-		default:		
-			break;
+	case 'l':
+		zPosicion=zPosicion-0.1;										
+		break;
+	case 'o':
+		zPosicion=zPosicion+0.1;										
+		break;
+	case 'q':
+		z_Spin=z_Spin+5.0;	
+		if (z_Spin>360.0)
+			z_Spin=z_Spin-360.0;								
+		break;
+	case 'e':									
+		z_Spin=z_Spin-5.0;	
+		if (z_Spin<-360)
+			z_Spin=z_Spin+360.0;					
+		break;
+	case 'a':
+		y_Spin=y_Spin+5.0;	
+		if (y_Spin>360.0)
+			y_Spin=y_Spin-360.0;								
+		break;
+	case 'd':									
+		y_Spin=y_Spin-5.0;	
+		if (y_Spin<-360)
+			y_Spin=y_Spin+360.0;					
+		break;
+	case 'w':
+		x_Spin=x_Spin+5.0;	
+		if (x_Spin>360.0)
+			x_Spin=x_Spin-360.0;								
+		break;
+	case 's':									
+		x_Spin=x_Spin-5.0;	
+		if (x_Spin<-360)
+			x_Spin=x_Spin+360.0;					
+		break;
+	default:		
+		break;
 	}
 	glutPostRedisplay();	
 }
@@ -754,22 +800,111 @@ void keyboard( unsigned char key, int x, int y ){
 * Descripción: Procedimiento que realiza las operaciones aritméticas involucradas en la tranlación del cuerpo
 * Autor: Gianni Carlo
 */
+
+
+void aumentar(GLfloat * pos){
+	*pos+=0.1f;
+}
+void disminuir(GLfloat * pos){
+	*pos-=0.1f;
+}
 void handleSpecialKeypress(int key, int x, int y) {
 	switch ( key ) {
-		case GLUT_KEY_UP:									
-			yPosicion=yPosicion+0.1;				
+	case GLUT_KEY_UP:	
+		switch (objeto){
+		case 0:
+			yPosicion=yPosicion+0.1;	
 			break;
-		case GLUT_KEY_DOWN:													
+		case 1:
+			disminuir(zPosicionCubo);					
+			break;
+		case 2:
+			disminuir(zPosicionTea);					
+			break;
+		case 3:
+			disminuir(zPosicionToroide);					
+			break;
+		case 4:
+			disminuir(zPosicionEsfera);					
+			break;
+		default:
+			break;
+		}
+
+		break;
+	case GLUT_KEY_DOWN:	
+		switch (objeto){
+		case 0:
 			yPosicion=yPosicion-0.1;
 			break;
-		case GLUT_KEY_RIGHT:									
-			xPosicion=xPosicion+0.1;		
+		case 1:
+			aumentar(zPosicionCubo);
 			break;
-		case GLUT_KEY_LEFT:									
+		case 2:
+			aumentar(zPosicionTea);					
+			break;
+		case 3:
+			aumentar(zPosicionToroide);					
+			break;
+		case 4:
+			aumentar(zPosicionEsfera);					
+			break;
+
+		default:
+			break;
+		}
+
+		break;
+	case GLUT_KEY_RIGHT:
+		switch (objeto){
+		case 0:
+			xPosicion=xPosicion+0.1;			
+			break;
+		case 1:
+			aumentar(xPosicionCubo);	
+			break;
+
+		case 2:
+			aumentar(xPosicionTea);					
+			break;
+		case 3:
+			aumentar(xPosicionToroide);					
+			break;
+		case 4:
+			aumentar(xPosicionEsfera);					
+			break;
+
+		default:
+			break;
+		}
+
+		break;
+	case GLUT_KEY_LEFT:	
+		switch (objeto){
+		case 0:
 			xPosicion=xPosicion-0.1;		
 			break;
-		default:									
+		case 1:
+			disminuir(xPosicionCubo);
 			break;
+
+		case 2:
+			disminuir(xPosicionTea);					
+			break;
+		case 3:
+			disminuir(xPosicionToroide);					
+			break;
+		case 4:
+			disminuir(xPosicionEsfera);					
+			break;
+		default:
+
+			break;
+		}
+
+		break;
+	default:									
+		break;
 	}
 	glutPostRedisplay();
 }
@@ -779,18 +914,114 @@ void handleSpecialKeypress(int key, int x, int y) {
 * Descripción: Punto de Inicio del programa
 * Autor: Denisse Pintado, Gianni Carlo, Roger Granda
 */
+
+
+
 int main( int argc, char** argv )
 {
-	/* std::cout << radioExternoT << std::endl;
-	std::cout << radioE << std::endl;*/
+
+
+
+
+	//esfera 
+	GLfloat x_SpinEsferaV=0.0f;
+	GLfloat y_SpinEsferaV=0.0f;
+	GLfloat z_SpinEsferaV=0.0f;
+	GLfloat xPosicionEsferaV = -3.0f;
+	GLfloat yPosicionEsferaV = 3.0f;
+	GLfloat zPosicionEsferaV= 3.0f;
+
+	x_SpinEsfera=& x_SpinEsferaV;
+	y_SpinEsfera=& y_SpinEsferaV;
+	z_SpinEsfera=& z_SpinEsferaV;
+	xPosicionEsfera = &xPosicionEsferaV;
+	yPosicionEsfera = &yPosicionEsferaV;
+	zPosicionEsfera= &zPosicionEsferaV;
+
+	// Toroide
+
+	GLfloat x_SpinToroideV=0.0f;
+	GLfloat y_SpinToroideV=0.0f;
+	GLfloat z_SpinToroideV=0.0f;
+	GLfloat xPosicionToroideV= 3.0f;
+	GLfloat yPosicionToroideV= 3.0f;
+	GLfloat zPosicionToroideV= 3.0f;
+
+
+	x_SpinToroide=&x_SpinToroideV;
+	y_SpinToroide=&y_SpinToroideV;
+	z_SpinToroide=&z_SpinToroideV;
+	xPosicionToroide= &xPosicionToroideV;
+	yPosicionToroide= &yPosicionToroideV;
+	zPosicionToroide= &zPosicionToroideV;
+
+	//CUBO
+	GLfloat x_SpinCuboV=0.0f;
+	GLfloat y_SpinCuboV=0.0f;
+	GLfloat z_SpinCuboV=0.0f;
+	GLfloat xPosicionCuboV = 0.0f;
+	GLfloat yPosicionCuboV = 3.0f;
+	GLfloat zPosicionCuboV = 3.0f;
+
+	x_SpinCubo=&x_SpinCuboV;
+	y_SpinCubo=&y_SpinCuboV;
+	z_SpinCubo=&z_SpinCuboV;
+	xPosicionCubo = &xPosicionCuboV;
+	yPosicionCubo = &yPosicionCuboV;
+	zPosicionCubo = &zPosicionCuboV;
+
+	//Cantina  
+	GLfloat x_SpinTeaV=0.0f;
+	GLfloat y_SpinTeaV=0.0f;
+	GLfloat z_SpinTeaV=0.0f;
+	GLfloat xPosicionTeaV= 0.0f;
+	GLfloat yPosicionTeaV= 3.0f;
+	GLfloat zPosicionTeaV= 0.0f;
+
+	x_SpinTea=&x_SpinTeaV;
+	y_SpinTea=&y_SpinTeaV;
+	z_SpinTea=&z_SpinTeaV;
+	xPosicionTea=& xPosicionTeaV;
+	yPosicionTea=& yPosicionTeaV;
+	zPosicionTea=& zPosicionTeaV;
+
+
+	//mastil 5.0,0.0,0.0
+	GLfloat x_SpinMastilV=0.0f;
+	GLfloat y_SpinMastilV=0.0f;
+	GLfloat z_SpinMastilV=0.0f;
+	GLfloat xPosicionMastilV= 5.0f;
+	GLfloat yPosicionMastilV= 0.0f;
+	GLfloat zPosicionMastilV= 0.0f;
+
+
+	x_SpinMastil=&x_SpinMastilV;
+	y_SpinMastil=&y_SpinMastilV;
+	z_SpinMastil=&z_SpinMastilV;
+	xPosicionMastil=&xPosicionMastilV;
+	yPosicionMastil=&yPosicionMastilV;
+	zPosicionMastil=&zPosicionMastilV;
+
+
+	GLfloat animacionEsferaV=0.0f;
+	GLfloat animacionToroideV=0.0f;
+	GLfloat animacionCuboV=0.0f;
+	GLfloat animacionTeaV=0.0f;
+
+	animacionEsfera=&animacionEsferaV;
+	animacionToroide=&animacionToroideV;
+	animacionCubo=&animacionCuboV;
+	animacionTea=&animacionTeaV;
 
 	glutInit(&argc,argv); 
+
+
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB|GLUT_DEPTH );
 	glutInitWindowPosition( 200, 0 );
 	glutInitWindowSize( ancho_plano,alto_plano );
 	glutCreateWindow( "Proyecto 2do Parcial");
 	init();
-	
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LESS);
 	glutIdleFunc(display);
