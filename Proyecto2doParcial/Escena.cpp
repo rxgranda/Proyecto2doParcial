@@ -77,7 +77,7 @@ GLfloat *zPosicionMastil;
 
 //techo
 GLfloat yPosicionTecho = 8.0f;
-int objeto=4;
+int objeto=1;
 
 //Luces
 //GLfloat  whiteLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
@@ -121,7 +121,7 @@ GLfloat  spot5_direction[] = { 0.0f,-1.0f, 0.0f };
 GLfloat  light5x=3.0f;
 GLfloat  light5z=3.0f;
 
-
+GLuint textura1;
 
 void dibujarEspacioNegro() {
 	glBegin(GL_QUADS);
@@ -495,7 +495,7 @@ void display (void){
 		glRotatef(y_Spin,0.0,1.0,0.0);
 		glRotatef(z_Spin,0.0,0.0,1.0);
 		glTranslatef(xPosicion,yPosicion,0);
-		
+	
 		//inicializar las luces
 		luces();
 
@@ -535,7 +535,10 @@ void display (void){
 
 		//cantina
 		glPushMatrix();	
-			glColor3f(0.89f,0.254f,0.192f);
+			//glColor3f(0.89f,0.254f,0.192f);
+		glEnable( GL_TEXTURE_2D );		//1
+			glBindTexture(GL_TEXTURE_2D, textura1);	//2	
+			glColor4f(1.0, 1.0, 1.0, 1.0); //3
 			if(debeRotar((float)(*xPosicionTea),(float)(*zPosicionTea))==1){
 				animar(animacionTea,yPosicionTea);		
 			}else{
@@ -545,11 +548,19 @@ void display (void){
 			glRotatef(*y_SpinTea,0.0f,1.0f,0.0f);
 			glRotatef(*z_SpinTea,0.0f,0.0f,1.0f);
 			glutSolidTeapot(1.0);
+			glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
 		
 		//cubo
 		glPushMatrix();	
-			glColor3f(0.89f,0.254f,0.192f);
+			//glColor3f(0.89f,0.254f,0.192f);
+		glEnable( GL_TEXTURE_2D );	
+		   glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glEnable(GL_TEXTURE_GEN_T);
+    glBindTexture(GL_TEXTURE_2D, textura1);
+			
+
+			
 			if(debeRotar((float)(*xPosicionCubo),(float)(*zPosicionCubo))==1){
 				animar(animacionCubo,yPosicionCubo);		
 			}else{
@@ -559,11 +570,18 @@ void display (void){
 			glRotatef(*y_SpinCubo,0.0f,1.0f,0.0f);
 			glRotatef(*z_SpinCubo,0.0f,0.0f,1.0f);
 			glutSolidCube(1.0);
+			glDisable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glDisable(GL_TEXTURE_GEN_T);
+				glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
 
 		//mastil
 		glPushMatrix();	
-			glColor3f(0.003921569f,0.250980392f,0.643137255f);
+			//glColor3f(0.003921569f,0.250980392f,0.643137255f);
+			glEnable( GL_TEXTURE_2D );		//1
+			glBindTexture(GL_TEXTURE_2D, textura1);	//2	
+			glColor4f(1.0, 1.0, 1.0, 1.0); //3
+				
 			glTranslatef(*xPosicionMastil,*yPosicionMastil,*zPosicionMastil);
 			glRotatef(-90.0f,1.0,0.0f,0.0f);
 			glRotatef(*x_SpinMastil,1.0f,0.0f,0.0f);
@@ -571,8 +589,14 @@ void display (void){
 			glRotatef(*z_SpinMastil,0.0f,0.0f,1.0f);
 			GLUquadricObj * qobj;
 			qobj = gluNewQuadric();
-			gluQuadricDrawStyle(qobj,GLU_FLAT);
+			//gluQuadricDrawStyle(qobj,GLU_FLAT);
+			
+			gluQuadricNormals(qobj, GLU_SMOOTH);
+			gluQuadricTexture(qobj, GL_TRUE);
+						
 			gluCylinder(qobj, 0.50, 0.25, 5.0, 4,4);
+			
+			glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
 
 		//hasta de mastil
@@ -600,6 +624,8 @@ void display (void){
 
 		// Dibujar las lamparas
 		lamparas();
+	
+	
 	glPopMatrix();
 	glutSwapBuffers();
 
@@ -614,7 +640,7 @@ void display (void){
 void init (void){
 	glClearColor(1.0f,1.0f,1.0f,0.0f);
 	glShadeModel(GL_SMOOTH);
-
+		
 	// habilitar luz
 	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
@@ -785,6 +811,59 @@ void handleSpecialKeypress(int key, int x, int y) {
 	}
 	glutPostRedisplay();
 }
+
+GLuint LoadTexture( const char * filename, int width, int height )
+{
+    GLuint texture;
+    unsigned char * data;
+    FILE * file;
+
+    //The following code will read in our RAW file
+    file = fopen( filename, "rb" );
+    if ( file == NULL ) return 0;
+    data = (unsigned char *)malloc( width * height * 3 );
+    fread( data, width * height * 3, 1, file );
+    fclose( file );
+
+    glGenTextures( 1, &texture ); //generate the texture with the loaded data
+    glBindTexture( GL_TEXTURE_2D, texture ); //bind the textureto it’s array
+    glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE ); //set texture environment parameters
+
+    //here we are setting what textures to use and when. The MINfilter is which quality to show
+    //when the texture is near the view, and the MAG filter is whichquality to show when the texture
+    //is far from the view.
+
+    //The qualities are (in order from worst to best)
+    //GL_NEAREST
+    //GL_LINEAR
+    //GL_LINEAR_MIPMAP_NEAREST
+    //GL_LINEAR_MIPMAP_LINEAR
+
+    //And if you go and use extensions, you can use Anisotropic filtering textures which are of an
+    //even better quality, but this will do for now.
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_LINEAR );
+
+    //Here we are setting the parameter to repeat the texture instead of clamping the texture
+    //to the edge of our shape. 
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT );
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT );
+
+    //Generate the texture
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0,  GL_BGR_EXT, GL_UNSIGNED_BYTE, data);
+    free( data ); //free the texture
+    return texture; //return whether it was successfull
+}
+
+
+
+void FreeTexture( GLuint texture )
+{
+  glDeleteTextures( 1, &texture ); 
+}
+
+
+
 /*
 * Función: main
 * Parámetros: int argc, char** argv
@@ -885,6 +964,7 @@ int main( int argc, char** argv )
 	glutInitWindowSize( ancho_plano,alto_plano );
 	glutCreateWindow( "Proyecto 2do Parcial");
 	init();
+
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LESS);
 	glutIdleFunc(display);
@@ -892,6 +972,8 @@ int main( int argc, char** argv )
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(handleSpecialKeypress);	
+		textura1 = LoadTexture( "textura4.bmp", 200,200);
 	glutMainLoop();
+	//FreeTexture( textura1 );
 	return 0;	
 }
