@@ -31,6 +31,8 @@ GLfloat zPosicion = 13.0f;
 GLuint _displayListId_AreaNegra; 
 GLuint _displayListId_AreaBlanca;
 
+
+
 //Esfera 
 GLfloat *x_SpinEsfera;
 GLfloat *y_SpinEsfera;
@@ -121,95 +123,166 @@ GLfloat  spot5_direction[] = { 0.0f,-1.0f, 0.0f };
 GLfloat  light5x=3.0f;
 GLfloat  light5z=3.0f;
 
+GLuint noTextura =0;
 GLuint textura1;
+GLuint textura2;
+
+GLuint * texturaBlancas;
+GLuint * texturaNegras;
+GLuint * texturaEsfera;
+GLuint * texturaToroide;
+GLuint * texturaTea;
+GLuint * texturaCubo;
+GLuint * texturaMastil;
+
+
+
 
 void dibujarEspacioNegro() {
 	glBegin(GL_QUADS);
 		glColor3f(0.05f,0.77f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.50f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,0.0f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
 		glColor3f(0.05f,0.77f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(0.0f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(0.0f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
 		glColor3f(0.05f,0.77f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(1.5f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.5f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(1.5f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
 		glColor3f(0.05f,0.77f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.50f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,-1.5f);
 	glEnd();
 	glBegin(GL_QUADS);
 		glColor3f(0.05f,0.77f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.50f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.0f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.0f,-1.5f);
 	glEnd();
 	glBegin(GL_QUADS);
 		glColor3f(0.05f,0.77f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.3f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.50f,0.3f,0.0f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,-1.5f);
 	glEnd();
 } 
 void dibujarEspacioBlanco() { 
-	glBegin(GL_QUADS);
+
+	glBegin(GL_QUADS);	
 		glColor3f(1.0f,1.0f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);		
 		glVertex3f(1.50f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,0.0f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
+
+
 	glBegin(GL_QUADS);
+	
 		glColor3f(1.0f,1.0f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(0.0f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(0.0f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,0.0f);
 	glEnd();
+
 	glBegin(GL_QUADS);
+		
 		glColor3f(1.0f,1.0f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(1.5f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.5f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(1.5f,0.3f,0.0f);
 	glEnd();
 	glBegin(GL_QUADS);
+	
 		glColor3f(1.0f,1.0f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.50f,0.0f,-1.5f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,-1.5f);
 	glEnd();
 	glBegin(GL_QUADS);
+		
 		glColor3f(1.0f,1.0f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.50f,0.0f,0.0f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.0f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.0f,-1.5f);
 	glEnd();
 	glBegin(GL_QUADS);
+		
 		glColor3f(1.0f,1.0f,1.0f);
+		glTexCoord2f(0.0f, 0.0f);   
 		glVertex3f(0.0f,0.3f,0.0f);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex3f(1.50f,0.3f,0.0f);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex3f(1.5f,0.3f,-1.5f);
+		glTexCoord2f(0.0f, 1.0f );
 		glVertex3f(0.0f,0.3f,-1.5f);
 	glEnd();
+		
 }
 void iniciarTablero (void){
 	_displayListId_AreaNegra = glGenLists(1); //Make room for the display list 
@@ -226,20 +299,37 @@ void iniciarTablero (void){
 
 void dibujarTablero (void){
 	glTranslatef(-4*1.5, 0.0, 4*1.5);
+	glColor4f(1.0, 1.0, 1.0, 1.0); //3
 	int k=0;
 	for(float j=0.0;j>(-8*1.5);j-=1.5) {
 		k++;
 		for(float i=0.0;i<(4*3.0);i+=3.0) {
 			if(k%2==0) {
 				glPushMatrix();
+				glLoadName(2);
 				glTranslatef(i,0.0,j);
+				
+				if(*texturaNegras!=noTextura){
+					glEnable( GL_TEXTURE_2D );	
+					glBindTexture(GL_TEXTURE_2D, *texturaNegras);	
+					
+				}
 				glCallList(_displayListId_AreaNegra);
+				glDisable( GL_TEXTURE_2D );		
+			
 				glPopMatrix();
 			}
 			else {
 				glPushMatrix();
+				glLoadName(2);
 				glTranslatef(i+1.5,0.0,j);
+					if(*texturaNegras!=noTextura){
+					glEnable( GL_TEXTURE_2D );		//1
+					glBindTexture(GL_TEXTURE_2D,  *texturaNegras);	//2
+					
+				}
 				glCallList(_displayListId_AreaNegra);
+				glDisable( GL_TEXTURE_2D );	
 				glPopMatrix();
 			}
 		}
@@ -249,14 +339,28 @@ void dibujarTablero (void){
 		for(float i=0.0;i<(4*3.0);i+=3.0) {
 			if(k%2!=0) {
 				glPushMatrix();
+				glLoadName(1);
 				glTranslatef(i,0.0,j);
+				if(*texturaBlancas!=noTextura){
+				glEnable( GL_TEXTURE_2D );		//1
+				glBindTexture(GL_TEXTURE_2D, *texturaBlancas);	//2
+				
+				}
 				glCallList(_displayListId_AreaBlanca);
+				glDisable( GL_TEXTURE_2D );	
 				glPopMatrix();
 			}
 			else {
 				glPushMatrix();
+				glLoadName(1);
 				glTranslatef(i+1.5,0.0,j);
+				if(*texturaBlancas!=noTextura){
+				glEnable( GL_TEXTURE_2D );		//1
+				glBindTexture(GL_TEXTURE_2D, *texturaBlancas);	//2
+				
+				}
 				glCallList(_displayListId_AreaBlanca);
+				glDisable( GL_TEXTURE_2D );	
 				glPopMatrix();
 			}
 		}
@@ -371,6 +475,7 @@ void lamparas(void){
 	GLfloat no_emitir[] = { 0.0, 0.0, 0.0, 1.0 };
 	//lampara1
 	glPushMatrix();	
+		glLoadName(10);
 		glTranslatef(light0x,7.9f,light0z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara1[] = {1.0, 1.0, 1.0};
@@ -385,6 +490,7 @@ void lamparas(void){
 
 	//lampara2
 	glPushMatrix();	
+	glLoadName(11);
 		glTranslatef(light1x,7.9f,light1z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara2[] = {1.0, 1.0, 1.0};
@@ -399,6 +505,7 @@ void lamparas(void){
 
 	//lampara3
 	glPushMatrix();	
+	glLoadName(12);
 		glTranslatef(light2x,7.9f,light2z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara3[] = {1.0, 1.0, 1.0};
@@ -413,6 +520,7 @@ void lamparas(void){
 
 	//lampara4
 	glPushMatrix();	
+	glLoadName(13);
 		glTranslatef(light3x,7.9f,light3z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara4[] = {1.0, 1.0, 1.0};
@@ -427,6 +535,7 @@ void lamparas(void){
 
 	//lampara5
 	glPushMatrix();	
+	glLoadName(14);
 		glTranslatef(light4x,7.9f,light4z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara5[] = {1.0, 1.0, 1.0};
@@ -441,6 +550,7 @@ void lamparas(void){
 
 	//lampara6
 	glPushMatrix();	
+	glLoadName(15);
 		glTranslatef(light5x,7.9f,light5z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara6[] = {1.0, 1.0, 1.0};		
@@ -461,8 +571,8 @@ int debeRotar(float objetoX, float objetoZ){
 	float z=objetoZ-(float)*zPosicionMastil;
 	x=pow(x,2.0f);
 	z=pow(z,2.0f);
-	float dis=sqrt(x+z);
-	if (dis >=1.5)
+	float dis=x+z-2.25;
+	if (dis >=0)
 		return 0;
 	else 
 		return 1;
@@ -501,12 +611,27 @@ void display (void){
 
 		//dibujar piso con el tablero
 		glPushMatrix();	
+
 			dibujarTablero();
 		glPopMatrix();
 
 		//esfera
 		glPushMatrix();
-			glColor3f(0.945f,0.552f,0.0196f);
+			glLoadName(3);
+			
+
+			if(*texturaEsfera!=noTextura){
+					glEnable( GL_TEXTURE_2D );	
+				glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+				glEnable(GL_TEXTURE_GEN_T);
+				glBindTexture(GL_TEXTURE_2D, *texturaEsfera);	//2	
+				glColor4f(1.0, 1.0, 1.0, 1.0); //3						
+			}else{
+				glColor3f(0.945f,0.552f,0.0196f);
+			}
+
+
+
 			if(debeRotar((float)(*xPosicionEsfera),(float)(*zPosicionEsfera))==1){
 				animar(animacionEsfera,yPosicionEsfera);		
 			}else{
@@ -516,12 +641,26 @@ void display (void){
 			glRotatef(*y_SpinEsfera,0.0f,1.0f,0.0f);
 			glRotatef(*z_SpinEsfera,0.0f,0.0f,1.0f);
 			glutSolidSphere(0.5,50,50);
+					glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
 
 		//toroide
 
 		glPushMatrix();	
-			glColor3f(0.0f,0.6313f,0.796f);
+			glLoadName(4);
+			
+
+			if(*texturaToroide!=noTextura){
+					glEnable( GL_TEXTURE_2D );	
+				glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+				glEnable(GL_TEXTURE_GEN_T);
+				glBindTexture(GL_TEXTURE_2D, *texturaToroide);	//2	
+				glColor4f(1.0, 1.0, 1.0, 1.0); //3						
+			}else{
+				glColor3f(0.0f,0.6313f,0.796f);
+			}
+
+
 			if(debeRotar((float)(*xPosicionToroide),(float)(*zPosicionToroide))==1){
 				animar(animacionToroide,yPosicionToroide);		
 			}else{
@@ -531,14 +670,28 @@ void display (void){
 			glRotatef(*y_SpinToroide,0.0f,1.0f,0.0f);
 			glRotatef(*z_SpinToroide,0.0f,0.0f,1.0f);
 			glutSolidTorus(0.2,0.5,50,50);
+			
+			glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
 
 		//cantina
-		glPushMatrix();	
-			//glColor3f(0.89f,0.254f,0.192f);
-		glEnable( GL_TEXTURE_2D );		//1
-			glBindTexture(GL_TEXTURE_2D, textura1);	//2	
-			glColor4f(1.0, 1.0, 1.0, 1.0); //3
+		glPushMatrix();
+		glLoadName(5);
+			
+
+		if(*texturaTea!=noTextura){
+					glEnable( GL_TEXTURE_2D );		//1
+			glBindTexture(GL_TEXTURE_2D, *texturaTea);	//2	
+			glColor4f(1.0, 1.0, 1.0, 1.0); //3						
+			}else{
+				glColor3f(0.89f,0.254f,0.192f);
+			}
+			
+	
+
+
+
+
 			if(debeRotar((float)(*xPosicionTea),(float)(*zPosicionTea))==1){
 				animar(animacionTea,yPosicionTea);		
 			}else{
@@ -553,11 +706,17 @@ void display (void){
 		
 		//cubo
 		glPushMatrix();	
-			//glColor3f(0.89f,0.254f,0.192f);
-		glEnable( GL_TEXTURE_2D );	
-		   glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
-    glEnable(GL_TEXTURE_GEN_T);
-    glBindTexture(GL_TEXTURE_2D, textura1);
+			glLoadName(6);
+			
+			if(*texturaCubo!=noTextura){
+				glEnable( GL_TEXTURE_2D );	
+				glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+				glEnable(GL_TEXTURE_GEN_T);
+				glBindTexture(GL_TEXTURE_2D, *texturaCubo);											
+			}else{
+				glColor3f(0.89f,0.254f,0.192f);	
+			}
+			
 			
 
 			
@@ -577,11 +736,9 @@ void display (void){
 
 		//mastil
 		glPushMatrix();	
-			//glColor3f(0.003921569f,0.250980392f,0.643137255f);
-			glEnable( GL_TEXTURE_2D );		//1
-			glBindTexture(GL_TEXTURE_2D, textura1);	//2	
-			glColor4f(1.0, 1.0, 1.0, 1.0); //3
-				
+			glLoadName(7);
+		
+			
 			glTranslatef(*xPosicionMastil,*yPosicionMastil,*zPosicionMastil);
 			glRotatef(-90.0f,1.0,0.0f,0.0f);
 			glRotatef(*x_SpinMastil,1.0f,0.0f,0.0f);
@@ -589,39 +746,95 @@ void display (void){
 			glRotatef(*z_SpinMastil,0.0f,0.0f,1.0f);
 			GLUquadricObj * qobj;
 			qobj = gluNewQuadric();
-			//gluQuadricDrawStyle(qobj,GLU_FLAT);
+			
+			
+			if(*texturaMastil!=noTextura){
+				glEnable( GL_TEXTURE_2D );	
+				glColor4f(1.0, 1.0, 1.0, 1.0); //3
+				glBindTexture(GL_TEXTURE_2D, *texturaMastil);	//2													
+			}else{
+				glColor3f(0.003921569f,0.250980392f,0.643137255f);	
+			}
 			
 			gluQuadricNormals(qobj, GLU_SMOOTH);
 			gluQuadricTexture(qobj, GL_TRUE);
 						
 			gluCylinder(qobj, 0.50, 0.25, 5.0, 4,4);
 			
-			glDisable( GL_TEXTURE_2D ); //4
+	glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
 
 		//hasta de mastil
 		glPushMatrix();	
-			glColor3f(0.003921569f,0.250980392f,0.643137255f);
+		glLoadName(7);
+	
+			if(*texturaMastil!=noTextura){
+				glEnable( GL_TEXTURE_2D );	
+				glColor4f(1.0, 1.0, 1.0, 1.0); //3
+				glBindTexture(GL_TEXTURE_2D, *texturaMastil);	//2													
+			}else{
+				glColor3f(0.003921569f,0.250980392f,0.643137255f);	
+			}
 			glTranslatef(*xPosicionMastil,*yPosicionMastil+5.0f,*zPosicionMastil);
 			glRotatef(-90.0f,1.0,0.0f,0.0f);
 			glRotatef(*x_SpinMastil,1.0f,0.0f,0.0f);
 			glRotatef(*y_SpinMastil,0.0f,1.0f,0.0f);
 			glRotatef(*z_SpinMastil,0.0f,0.0f,1.0f);
 			glutSolidCone(0.25,0.4,4,4);
+					glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
 
 		//techo
 		glPushMatrix();	
+		glLoadName(8);
 			glTranslatef(-6.0f,yPosicionTecho,6.0f);
+			//glEnable( GL_TEXTURE_2D );		//1
+			//glBindTexture(GL_TEXTURE_2D, textura1);	//2
 			glBegin(GL_QUADS);
-				glColor3f(0.05f,0.77f,1.0f);
+				//glColor3f(0.05f,0.77f,1.0f);
 				glVertex3f(0.0f,0.0f,0.0f);
 				glVertex3f(12.0f,0.0f,0.0f);
 				glVertex3f(12.0f,0.0f,-12.0f);
 				glVertex3f(0.0f,0.0f,-12.0f);
+				/*glTexCoord3f(0.0f,0.0f,0.0f);
+				glTexCoord3f(12.0f,0.0f,0.0f);
+				glTexCoord3f(12.0f,0.0f,-12.0f);
+				glTexCoord3f(0.0f,0.0f,-12.0f);*/
 			glEnd();
+			//glDisable( GL_TEXTURE_2D ); //4
 		glPopMatrix();
+		//glPushMatrix();	
+		//glEnable( GL_TEXTURE_2D );		//1
+		//	glBindTexture(GL_TEXTURE_2D, textura1);	//2
+		//		glColor4f(1.0, 1.0, 1.0, 1.0); //3
+		//glBegin(GL_QUADS);
+		//
+		//		//glColor3f(0.05f,0.77f,1.0f);
+		//		glTexCoord3f(0.0f,0.0f,0.0f);
+		//		glVertex3f(0.0f,0.0f,0.0f);
+		//		
+		//		glTexCoord3f(12.0f,0.0f,0.0f);
+		//		glVertex3f(12.0f,0.0f,0.0f);
 
+		//		glTexCoord3f(12.0f,5.0f,0.0f);
+		//		glVertex3f(12.0f,5.0f,0.0f);
+
+		//		glTexCoord3f(0.0f,5.0f,0.0f);
+		//		glVertex3f(0.0f,5.0f,0.0f);
+
+		//		
+
+		//		
+		//		
+		//		
+		//		
+		//		
+		//		
+		//		
+		//		
+		//	glEnd();
+		//	glDisable( GL_TEXTURE_2D );
+		//glPopMatrix();
 		// Dibujar las lamparas
 		lamparas();
 	
@@ -651,6 +864,194 @@ void init (void){
 	// Poner las propiedades del material que se van a reflejar en glColor
 	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
 	iniciarTablero();
+}
+
+
+int processHits( GLint hits, GLuint nameBuffer[] )
+{
+	unsigned int i;
+	unsigned int j;
+    GLuint names;
+    GLuint* pPtr;
+	GLuint* temp;
+	float pasado;
+
+   
+    pPtr = nameBuffer;
+	temp = nameBuffer;
+	unsigned int seleccionado;
+    for( i = 0; i < hits; ++i )
+    {
+		names = *pPtr;
+		
+		++pPtr;
+		++temp;
+
+		
+		
+		
+		if(i!=0){
+			temp = pPtr;
+			if(pasado>(*pPtr/(pow(2.0 , 32.0)-1.0))){
+				pasado = *pPtr/(pow(2.0 , 32.0)-1.0);
+				++temp;
+				++temp;
+				seleccionado = *temp;
+				
+			}
+		
+		}else{
+			pasado = *pPtr/(pow(2.0 , 32.0)-1.0);
+			++temp;
+			++temp;
+			seleccionado = *temp;
+			
+		}
+
+		++pPtr;
+
+		++pPtr;
+
+	
+		for( j = 0; j < names; ++j, ++pPtr )
+		{
+			
+		}
+		
+    }
+	
+	return seleccionado;
+}
+
+GLvoid mouse(GLint button, GLint state, GLint x, GLint y){
+	GLuint nameBuffer[50];
+	GLint hits;
+	GLint viewport[4];
+	GLfloat projMatrix[16];
+	unsigned int nameId;
+
+	if( GLUT_LEFT_BUTTON == button && GLUT_DOWN == state || GLUT_RIGHT_BUTTON==button && GLUT_DOWN == state  )
+	{
+		glSelectBuffer( 50, nameBuffer ); //Declarar buffer de los hits
+        glRenderMode( GL_SELECT ); // Cambiar a modo de seleccion
+
+		// Inicializar el stack de nombres
+		glInitNames();        
+		glPushName( 70 ); // dummy
+				
+		/*
+			set up the viewing volume for selection
+		*/
+		
+		/*
+			we need to premultiply the current projection matrix by
+			the gluPickMatrix.  OpenGL always postmultiplies though.
+			Thus we need to get a copy of the current projection
+			matrix, load up gluPickMatrix, and then postmultiply
+			gluPickMatrix by the current projection matrix.
+		*/
+		
+		/* get a copy of the current projection matrix */
+		glGetFloatv( GL_PROJECTION_MATRIX, projMatrix );
+
+		glMatrixMode( GL_PROJECTION );
+		glPushMatrix();
+		glLoadIdentity();
+
+		/* pick a 20x20 region around the cursor*/
+		glGetIntegerv( GL_VIEWPORT, viewport );
+		gluPickMatrix( (GLdouble)x, (GLdouble)( viewport[3] - y ), 20, 20, viewport );
+		
+		glMultMatrixf( projMatrix ); /* post multiply the "current" projection matrix */
+		glMatrixMode( GL_MODELVIEW );
+        
+		display();
+		glFlush();
+
+		/* restore the projection matrix */
+		glMatrixMode( GL_PROJECTION );
+		glPopMatrix();
+		glMatrixMode( GL_MODELVIEW );
+
+		/*
+			Now process the information obtained
+		*/
+		hits = glRenderMode( GL_RENDER );
+		if( -1 != hits )
+		{
+			nameId = processHits( hits, nameBuffer );
+			switch (nameId)
+			{
+			case 0:
+				cout<<"nada\n";
+				objeto=0;
+				break;
+			case 1:
+				cout<<"blanco\n";
+				objeto=1;			
+				break;
+			case 2:
+				objeto=2;
+				cout<<"celeste\n";
+				break;
+			case 3:
+				objeto=3;
+				cout<<"esfera\n";
+				break;
+			case 4:
+				objeto=4;
+				cout<<"toroide\n";
+				break;
+			case 5:
+				objeto=5;
+				cout<<"tea\n";
+				break;
+			case 6:
+				objeto=6;
+				cout<<"cubo\n";
+				break;
+			case 7:
+				cout<<"mastil\n";
+				objeto=7;
+			case 8:
+				cout<<"techo\n";
+				objeto=7;
+				break;
+			case 10:
+				cout<<"luz1\n";
+				objeto=7;
+				break;
+			case 11:
+				cout<<"luz2\n";
+				objeto=7;
+				break;
+			case 12:
+				cout<<"luz3\n";
+				objeto=7;
+				break;
+			case 13:
+				cout<<"luz4\n";
+				objeto=7;
+				break;
+			case 14:
+				cout<<"luz5\n";
+				objeto=7;
+				break;
+			case 15:
+				cout<<"luz6\n";
+				objeto=7;
+				break;
+			default:
+				objeto=0;
+				break;
+			}
+
+		}
+		else
+		{
+			fprintf( stderr, "Picking hits overflowed the name buffer\n" );
+		}
+	}
 }
 
 
@@ -862,6 +1263,71 @@ void FreeTexture( GLuint texture )
   glDeleteTextures( 1, &texture ); 
 }
 
+void cambiarTextura (int val)
+{
+	GLuint* texturaSeleccionada;
+	
+	switch (val){
+		case 0:			
+			texturaSeleccionada=&noTextura;
+		break;
+		case 1:
+				cout<<"text1\n";
+			texturaSeleccionada=&textura1;
+			break;
+		case 2:
+			cout<<"text2\n";
+			texturaSeleccionada=&textura2;
+			break;
+		default:
+			break;
+	}
+	switch (objeto){
+		case 1:
+			texturaBlancas=texturaSeleccionada;
+			break;
+		case 2:
+			texturaNegras=texturaSeleccionada;
+			break;
+		case 3:
+			texturaEsfera=texturaSeleccionada;
+			break;
+		case 4:
+			texturaToroide=texturaSeleccionada;
+			break;
+		case 5:
+			texturaTea=texturaSeleccionada;
+			break;
+		case 6:
+			texturaCubo=texturaSeleccionada;
+			break;
+		case 7:
+			texturaMastil=texturaSeleccionada;
+			break;		
+		default:
+			break;
+	}
+//	glutPostRedisplay();
+    
+}
+void setupMenus(){
+
+
+
+	glutCreateMenu(cambiarTextura);
+	glutAddMenuEntry("Sin Textura", 0);
+	glutAddMenuEntry("Textura 1", 1);
+	glutAddMenuEntry("Textura 2", 2);
+	glutAddMenuEntry("Textura 3", 3);
+	glutAddMenuEntry("Textura 4", 4);
+	glutAddMenuEntry("Textura 5", 5);
+	glutAddMenuEntry("Textura 6", 6);
+	glutAddMenuEntry("Textura 7", 7);
+	glutAddMenuEntry("Textura 8", 8);
+  glutAttachMenu(GLUT_RIGHT_BUTTON);
+ 
+}
+
 
 
 /*
@@ -871,7 +1337,9 @@ void FreeTexture( GLuint texture )
 * Autor: Denisse Pintado, Gianni Carlo, Roger Granda
 */
 int main( int argc, char** argv )
+
 {
+	
 	//esfera 
 	GLfloat x_SpinEsferaV=0.0f;
 	GLfloat y_SpinEsferaV=0.0f;
@@ -963,7 +1431,7 @@ int main( int argc, char** argv )
 	glutInitWindowPosition( 200, 0 );
 	glutInitWindowSize( ancho_plano,alto_plano );
 	glutCreateWindow( "Proyecto 2do Parcial");
-	init();
+	
 
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LESS);
@@ -972,7 +1440,20 @@ int main( int argc, char** argv )
 	glutReshapeFunc(reshape);
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(handleSpecialKeypress);	
-		textura1 = LoadTexture( "textura4.bmp", 200,200);
+	
+	glutMouseFunc(mouse);
+	setupMenus();
+	textura1 = LoadTexture( "textura4.bmp", 200,200);
+	textura2 = LoadTexture( "textura1.bmp", 200,200);
+
+	texturaBlancas=&noTextura;
+	texturaNegras=&noTextura;
+	texturaEsfera=&noTextura;
+    texturaToroide=&noTextura;
+	texturaTea=&noTextura;
+	texturaCubo=&noTextura;
+	texturaMastil=&noTextura;
+	init();
 	glutMainLoop();
 	//FreeTexture( textura1 );
 	return 0;	
