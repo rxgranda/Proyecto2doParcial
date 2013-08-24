@@ -25,7 +25,7 @@ GLfloat y_Spin=0.0f;
 GLfloat z_Spin=0.0f;
 GLfloat xPosicion = 0.0f;
 GLfloat yPosicion = 0.0f;
-GLfloat zPosicion = 13.0f;
+GLfloat zPosicion = 12.0f;
 
 // lista tablero del piso
 GLuint _displayListId_AreaNegra; 
@@ -79,53 +79,57 @@ GLfloat *zPosicionMastil;
 
 //techo
 GLfloat yPosicionTecho = 8.0f;
-int objeto=1;
+int objeto=0;
 
 //Luces
-//GLfloat  whiteLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
+GLfloat  whiteLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 GLfloat  spot0_direction[] = { 0.0f,-1.0f, 0.0f };
 GLfloat	 lightPos[] = { 0.0f, 8.0f, 0.0f,1.0f };
-GLfloat  light0x=-3.0f;
+GLfloat  light0x=-2.0f;
 GLfloat  light0z=-3.0f;
 
 //Segunda Luz
 GLfloat light1_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat light1_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat  spot1_direction[] = { 0.0f,1.0f, 0.0f };
-GLfloat  light1x=3.0f;
+GLfloat  light1x=2.0f;
 GLfloat  light1z=-3.0f;
 
 //Tercera Luz
 GLfloat light2_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat light2_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat  spot2_direction[] = { 0.0f,-1.0f, 0.0f };
-GLfloat  light2x=-3.0f;
+GLfloat  light2x=-2.0f;
 GLfloat  light2z=0.0f;
 
 //Cuarta Luz
 GLfloat light3_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat light3_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat  spot3_direction[] = { 0.0f,-1.0f, 0.0f };
-GLfloat  light3x=3.0f;
+GLfloat  light3x=2.0f;
 GLfloat  light3z=0.0f;
 
 //Quinta Luz
 GLfloat light4_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat light4_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat  spot4_direction[] = { 0.0f,-1.0f, 0.0f };
-GLfloat  light4x=-3.0f;
+GLfloat  light4x=-2.0f;
 GLfloat  light4z=3.0f;
 
 //Sexta Luz
 GLfloat light5_diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat light5_specular[] = { 1.0, 1.0, 1.0, 1.0 };
 GLfloat  spot5_direction[] = { 0.0f,-1.0f, 0.0f };
-GLfloat  light5x=3.0f;
+GLfloat  light5x=2.0f;
 GLfloat  light5z=3.0f;
 
 GLuint noTextura =0;
 GLuint textura1;
 GLuint textura2;
+GLuint textura3;
+GLuint textura4;
+GLuint textura5;
+GLuint textura6;
 
 GLuint * texturaBlancas;
 GLuint * texturaNegras;
@@ -135,6 +139,13 @@ GLuint * texturaTea;
 GLuint * texturaCubo;
 GLuint * texturaMastil;
 
+
+int switchL1=1;
+int switchL2=1;
+int switchL3=1;
+int switchL4=1;
+int switchL5=1;
+int switchL6=1;
 
 
 
@@ -386,10 +397,11 @@ void reshape(int w, int h){
 void luces(void){
 	//Primera  Luz
 	glPushMatrix();
+		
 		glTranslatef(light0x,0.0f,light0z);
 		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 25.0);
 		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot0_direction);
-		glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.1);
+		glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 0.1);		
 		glLightfv(GL_LIGHT0,GL_POSITION,lightPos);
 	glPopMatrix();
 	//Segunda  Luz
@@ -463,38 +475,78 @@ void luces(void){
 	glPopMatrix();
 
 	//Habilitar Luces
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
-	glEnable(GL_LIGHT2);
-	glEnable(GL_LIGHT3);
-	glEnable(GL_LIGHT4);
-	glEnable(GL_LIGHT5);
+	if(switchL1==1)
+		glEnable(GL_LIGHT0);
+	else
+		glDisable(GL_LIGHT0);
+
+	if(switchL2==1)
+		glEnable(GL_LIGHT1);
+	else
+		glDisable(GL_LIGHT1);
+
+	if(switchL3==1)
+		glEnable(GL_LIGHT2);
+	else
+		glDisable(GL_LIGHT2);
+
+	if(switchL4==1)
+		glEnable(GL_LIGHT3);
+	else
+		glDisable(GL_LIGHT3);
+
+	if(switchL5==1)
+		glEnable(GL_LIGHT4);
+	else
+		glDisable(GL_LIGHT4);
+
+	if(switchL6==1)
+		glEnable(GL_LIGHT5);
+	else
+		glDisable(GL_LIGHT5);
+	
 }
 
 void lamparas(void){
 	GLfloat no_emitir[] = { 0.0, 0.0, 0.0, 1.0 };
-	//lampara1
-	glPushMatrix();	
-		glLoadName(10);
-		glTranslatef(light0x,7.9f,light0z);
+			
+	//lampara1	
+	glPushMatrix();			
+		glTranslatef(light0x,7.9f,light0z);		
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara1[] = {1.0, 1.0, 1.0};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara1);
-		glBegin(GL_QUADS);
+		if(switchL1==1)
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara1);		
+		else{
+			glColor3f(0.5,0.5,0.5);
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,no_emitir);
+		}
+		
+		glLoadName(8);
+			glBegin(GL_QUADS);
 			glVertex3f(-1.0f,0.0f,-1.0f);
 			glVertex3f(-1.0f,0.0f,1.0f);
 			glVertex3f(1.0f,0.0f,1.0f);
 			glVertex3f(1.0f,0.0f,-1.0f);											
 		glEnd();
+	
+
 	glPopMatrix();
 
 	//lampara2
 	glPushMatrix();	
-	glLoadName(11);
+	
 		glTranslatef(light1x,7.9f,light1z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara2[] = {1.0, 1.0, 1.0};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara2);
+		if(switchL2==1)
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara2);	
+		else{
+			glColor3f(0.5,0.5,0.5);
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,no_emitir);
+		}
+		
+			glLoadName(9);
 		glBegin(GL_QUADS);
 			glVertex3f(-1.0f,0.0f,-1.0f);
 			glVertex3f(-1.0f,0.0f,1.0f);
@@ -505,11 +557,18 @@ void lamparas(void){
 
 	//lampara3
 	glPushMatrix();	
-	glLoadName(12);
+	
 		glTranslatef(light2x,7.9f,light2z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara3[] = {1.0, 1.0, 1.0};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara3);
+
+		if(switchL3==1)
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara3);	
+		else{
+			glColor3f(0.5,0.5,0.5);
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,no_emitir);
+		}
+		glLoadName(10);
 		glBegin(GL_QUADS);
 			glVertex3f(-1.0f,0.0f,-1.0f);
 			glVertex3f(-1.0f,0.0f,1.0f);
@@ -520,11 +579,17 @@ void lamparas(void){
 
 	//lampara4
 	glPushMatrix();	
-	glLoadName(13);
+	
 		glTranslatef(light3x,7.9f,light3z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara4[] = {1.0, 1.0, 1.0};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara4);
+		if(switchL4==1)
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara4);
+		else{
+			glColor3f(0.5,0.5,0.5);
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,no_emitir);
+		}
+		glLoadName(11);
 		glBegin(GL_QUADS);
 			glVertex3f(-1.0f,0.0f,-1.0f);
 			glVertex3f(-1.0f,0.0f,1.0f);
@@ -535,11 +600,17 @@ void lamparas(void){
 
 	//lampara5
 	glPushMatrix();	
-	glLoadName(14);
+	
 		glTranslatef(light4x,7.9f,light4z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara5[] = {1.0, 1.0, 1.0};
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara5);
+		if(switchL5==1)
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara5);
+		else{
+			glColor3f(0.5,0.5,0.5);
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,no_emitir);
+		}
+		glLoadName(12);
 		glBegin(GL_QUADS);
 			glVertex3f(-1.0f,0.0f,-1.0f);
 			glVertex3f(-1.0f,0.0f,1.0f);
@@ -550,11 +621,18 @@ void lamparas(void){
 
 	//lampara6
 	glPushMatrix();	
-	glLoadName(15);
+	
 		glTranslatef(light5x,7.9f,light5z);
 		glColor3f(1.0f,0.0f,0.0f);
 		GLfloat lampara6[] = {1.0, 1.0, 1.0};		
-		glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara6);
+		if(switchL6==1)
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,lampara6);
+		else{
+			glColor3f(0.5,0.5,0.5);
+			glMaterialfv(GL_FRONT_AND_BACK, GL_EMISSION,no_emitir);
+		}
+		
+		glLoadName(13);
 		glBegin(GL_QUADS);
 			glVertex3f(-1.0f,0.0f,-1.0f);
 			glVertex3f(-1.0f,0.0f,1.0f);
@@ -714,7 +792,7 @@ void display (void){
 				glEnable(GL_TEXTURE_GEN_T);
 				glBindTexture(GL_TEXTURE_2D, *texturaCubo);											
 			}else{
-				glColor3f(0.89f,0.254f,0.192f);	
+				glColor3f(1.0f,1.0f,0.0f);	
 			}
 			
 			
@@ -786,55 +864,19 @@ void display (void){
 
 		//techo
 		glPushMatrix();	
-		glLoadName(8);
+		glLoadName(0);
 			glTranslatef(-6.0f,yPosicionTecho,6.0f);
-			//glEnable( GL_TEXTURE_2D );		//1
-			//glBindTexture(GL_TEXTURE_2D, textura1);	//2
+		
 			glBegin(GL_QUADS);
-				//glColor3f(0.05f,0.77f,1.0f);
+				glColor3f(1.0f,1.0f,0.0f);
 				glVertex3f(0.0f,0.0f,0.0f);
 				glVertex3f(12.0f,0.0f,0.0f);
 				glVertex3f(12.0f,0.0f,-12.0f);
 				glVertex3f(0.0f,0.0f,-12.0f);
-				/*glTexCoord3f(0.0f,0.0f,0.0f);
-				glTexCoord3f(12.0f,0.0f,0.0f);
-				glTexCoord3f(12.0f,0.0f,-12.0f);
-				glTexCoord3f(0.0f,0.0f,-12.0f);*/
+				
 			glEnd();
-			//glDisable( GL_TEXTURE_2D ); //4
+		
 		glPopMatrix();
-		//glPushMatrix();	
-		//glEnable( GL_TEXTURE_2D );		//1
-		//	glBindTexture(GL_TEXTURE_2D, textura1);	//2
-		//		glColor4f(1.0, 1.0, 1.0, 1.0); //3
-		//glBegin(GL_QUADS);
-		//
-		//		//glColor3f(0.05f,0.77f,1.0f);
-		//		glTexCoord3f(0.0f,0.0f,0.0f);
-		//		glVertex3f(0.0f,0.0f,0.0f);
-		//		
-		//		glTexCoord3f(12.0f,0.0f,0.0f);
-		//		glVertex3f(12.0f,0.0f,0.0f);
-
-		//		glTexCoord3f(12.0f,5.0f,0.0f);
-		//		glVertex3f(12.0f,5.0f,0.0f);
-
-		//		glTexCoord3f(0.0f,5.0f,0.0f);
-		//		glVertex3f(0.0f,5.0f,0.0f);
-
-		//		
-
-		//		
-		//		
-		//		
-		//		
-		//		
-		//		
-		//		
-		//		
-		//	glEnd();
-		//	glDisable( GL_TEXTURE_2D );
-		//glPopMatrix();
 		// Dibujar las lamparas
 		lamparas();
 	
@@ -857,7 +899,7 @@ void init (void){
 	// habilitar luz
 	glEnable(GL_LIGHTING);
 	glEnable(GL_NORMALIZE);
-	
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT,whiteLight);
 	// Habilitar el rastreo de color
 	glEnable(GL_COLOR_MATERIAL);
 
@@ -876,18 +918,16 @@ int processHits( GLint hits, GLuint nameBuffer[] )
 	GLuint* temp;
 	float pasado;
 
-   
+    //printf( "hits = %d\n", hits );
     pPtr = nameBuffer;
 	temp = nameBuffer;
-	unsigned int seleccionado;
+	unsigned int seleccionado=0;
     for( i = 0; i < hits; ++i )
     {
 		names = *pPtr;
-		
 		++pPtr;
 		++temp;
 
-		
 		
 		
 		if(i!=0){
@@ -897,7 +937,6 @@ int processHits( GLint hits, GLuint nameBuffer[] )
 				++temp;
 				++temp;
 				seleccionado = *temp;
-				
 			}
 		
 		}else{
@@ -905,24 +944,21 @@ int processHits( GLint hits, GLuint nameBuffer[] )
 			++temp;
 			++temp;
 			seleccionado = *temp;
-			
 		}
 
 		++pPtr;
-
 		++pPtr;
 
-	
+		//printf("Id seleccionado: ");
 		for( j = 0; j < names; ++j, ++pPtr )
 		{
-			
+			//printf( "%u\t", *pPtr );
 		}
-		
+		//printf("\n");		
     }
-	
+	//printf("\n");
 	return seleccionado;
 }
-
 GLvoid mouse(GLint button, GLint state, GLint x, GLint y){
 	GLuint nameBuffer[50];
 	GLint hits;
@@ -930,7 +966,7 @@ GLvoid mouse(GLint button, GLint state, GLint x, GLint y){
 	GLfloat projMatrix[16];
 	unsigned int nameId;
 
-	if( GLUT_LEFT_BUTTON == button && GLUT_DOWN == state || GLUT_RIGHT_BUTTON==button && GLUT_DOWN == state  )
+	if( GLUT_LEFT_BUTTON == button && GLUT_DOWN == state )
 	{
 		glSelectBuffer( 50, nameBuffer ); //Declarar buffer de los hits
         glRenderMode( GL_SELECT ); // Cambiar a modo de seleccion
@@ -960,7 +996,7 @@ GLvoid mouse(GLint button, GLint state, GLint x, GLint y){
 
 		/* pick a 20x20 region around the cursor*/
 		glGetIntegerv( GL_VIEWPORT, viewport );
-		gluPickMatrix( (GLdouble)x, (GLdouble)( viewport[3] - y ), 20, 20, viewport );
+		gluPickMatrix( (GLdouble)x, (GLdouble)( viewport[3] - y ), 1, 1, viewport );
 		
 		glMultMatrixf( projMatrix ); /* post multiply the "current" projection matrix */
 		glMatrixMode( GL_MODELVIEW );
@@ -982,10 +1018,7 @@ GLvoid mouse(GLint button, GLint state, GLint x, GLint y){
 			nameId = processHits( hits, nameBuffer );
 			switch (nameId)
 			{
-			case 0:
-				cout<<"nada\n";
-				objeto=0;
-				break;
+				
 			case 1:
 				cout<<"blanco\n";
 				objeto=1;			
@@ -1013,47 +1046,57 @@ GLvoid mouse(GLint button, GLint state, GLint x, GLint y){
 			case 7:
 				cout<<"mastil\n";
 				objeto=7;
+				break;
 			case 8:
-				cout<<"techo\n";
-				objeto=7;
+				cout<<"luz1\n";
+				objeto=0;
+				switchL1=(switchL1+1)%2;
+				break;
+			case 9:
+				cout<<"luz2\n";
+				objeto=0;
+				switchL2=(switchL2+1)%2;
 				break;
 			case 10:
-				cout<<"luz1\n";
-				objeto=7;
+				cout<<"luz3\n";
+				objeto=0;
+				switchL3=(switchL3+1)%2;
 				break;
 			case 11:
-				cout<<"luz2\n";
-				objeto=7;
+				cout<<"luz4\n";
+				objeto=11;
+				switchL4=(switchL4+1)%2;
 				break;
 			case 12:
-				cout<<"luz3\n";
-				objeto=7;
+				cout<<"luz5\n";
+				objeto=0;
+				switchL5=(switchL5+1)%2;
 				break;
 			case 13:
-				cout<<"luz4\n";
-				objeto=7;
-				break;
-			case 14:
-				cout<<"luz5\n";
-				objeto=7;
-				break;
-			case 15:
 				cout<<"luz6\n";
-				objeto=7;
+				objeto=0;
+				switchL6=(switchL6+1)%2;
 				break;
 			default:
-				objeto=0;
+				objeto = 0;
 				break;
 			}
 
 		}
 		else
 		{
-			fprintf( stderr, "Picking hits overflowed the name buffer\n" );
+			fprintf( stderr, "hits overflowed\n" );
 		}
 	}
 }
 
+
+void aumentar(GLfloat * pos){
+	*pos+=0.1f;
+}
+void disminuir(GLfloat * pos){
+	*pos-=0.1f;
+}
 
 
 /*
@@ -1065,40 +1108,260 @@ GLvoid mouse(GLint button, GLint state, GLint x, GLint y){
 void keyboard( unsigned char key, int x, int y ){
 	switch ( key ) {
 	case 'l':
-		zPosicion=zPosicion-0.1;										
+		switch (objeto){
+		case 0:
+			zPosicion=zPosicion+0.1;	
+			break;
+		case 3:
+			if(*zPosicionEsfera<5.5){
+			aumentar(zPosicionEsfera);
+			}
+			break;
+		case 4:
+			if(*zPosicionToroide<5.8){
+			aumentar(zPosicionToroide);
+			}
+			break;
+		case 5:
+			if(*zPosicionTea<5.0){
+			aumentar(zPosicionTea);
+			}
+			break;
+		case 6:
+			if(*zPosicionCubo<5.5){
+			aumentar(zPosicionCubo);
+			}
+			break;
+		case 7:
+			if(*zPosicionMastil<5.5){
+			aumentar(zPosicionMastil);
+			}
+			break;
+		default:
+			break;
+		}
 		break;
 	case 'o':
-		zPosicion=zPosicion+0.1;										
+		switch (objeto){
+		case 0:
+			zPosicion=zPosicion-0.1;	
+			break;
+		case 3:
+			if(*zPosicionEsfera>-5.5){
+			disminuir(zPosicionEsfera);
+			}
+			break;
+		case 4:
+			if(*zPosicionToroide>-5.8){
+			disminuir(zPosicionToroide);					
+			}
+			break;
+		case 5:
+			if(*zPosicionTea>-5){
+			disminuir(zPosicionTea);
+			}
+			break;
+		case 6:
+			if(*zPosicionCubo>-5.5){
+			disminuir(zPosicionCubo);
+			}
+			break;
+		case 7:
+			if(*zPosicionMastil>-5.5){
+			disminuir(zPosicionMastil);
+			}
+			break;
+		default:
+			break;
+		}
 		break;
 	case 'q':
-		z_Spin=z_Spin+5.0;	
-		if (z_Spin>360.0)
-			z_Spin=z_Spin-360.0;								
+		
+
+		switch (objeto){
+		case 0:
+			z_Spin=z_Spin+5;	
+			if (z_Spin>360)
+				z_Spin=z_Spin-360;	
+			break;
+		case 3:
+			*z_SpinEsfera=*z_SpinEsfera+5;	
+			if (*z_SpinEsfera>360)
+				*z_SpinEsfera=*z_SpinEsfera-360;
+			break;
+		case 4:
+			*z_SpinToroide=*z_SpinToroide+5;	
+			if (*z_SpinToroide>360)
+				*z_SpinToroide=*z_SpinToroide-360;						
+			break;
+		case 5:
+			*z_SpinTea=*z_SpinTea+5;	
+			if (*z_SpinTea>360)
+				*z_SpinTea=*z_SpinTea-360;
+			break;
+		case 6:
+			*z_SpinCubo=*z_SpinCubo+5;	
+			if (*z_SpinCubo>360)
+				*z_SpinCubo=*z_SpinCubo-360;					
+			break;
+		default:
+			break;
+		}
 		break;
 	case 'e':									
-		z_Spin=z_Spin-5.0;	
-		if (z_Spin<-360)
-			z_Spin=z_Spin+360.0;					
+		switch (objeto){
+		case 0:
+			z_Spin=z_Spin-5;	
+			if (z_Spin>360)
+				z_Spin=z_Spin+360;	
+			break;
+		case 3:
+			*z_SpinEsfera=*z_SpinEsfera-5;	
+			if (*z_SpinEsfera>360)
+				*z_SpinEsfera=*z_SpinEsfera+360;
+			break;
+		case 4:
+			*z_SpinToroide=*z_SpinToroide-5;	
+			if (*z_SpinToroide>360)
+				*z_SpinToroide=*z_SpinToroide+360;						
+			break;
+		case 5:
+			*z_SpinTea=*z_SpinTea-5;
+			if (*z_SpinTea>360)
+				*z_SpinTea=*z_SpinTea+360;
+			break;
+		case 6:
+			*z_SpinCubo=*z_SpinCubo-5;	
+			if (*z_SpinCubo>360)
+				*z_SpinCubo=*z_SpinCubo+360;					
+			break;
+		default:
+			break;
+		}					
 		break;
 	case 'a':
-		y_Spin=y_Spin+5.0;	
-		if (y_Spin>360.0)
-			y_Spin=y_Spin-360.0;								
+		switch (objeto){
+		case 0:
+			y_Spin=y_Spin+5;	
+			if (y_Spin>360)
+				y_Spin=y_Spin-360;	
+			break;
+		case 3:
+			*y_SpinEsfera=*y_SpinEsfera+5;	
+			if (*y_SpinEsfera>360)
+				*y_SpinEsfera=*y_SpinEsfera-360;
+			break;
+		case 4:
+			*y_SpinToroide=*y_SpinToroide+5;	
+			if (*y_SpinToroide>360)
+				*y_SpinToroide=*y_SpinToroide-360;						
+			break;
+		case 5:
+			*y_SpinTea=*y_SpinTea+5;	
+			if (*y_SpinTea>360)
+				*y_SpinTea=*y_SpinTea-360;
+			break;
+		case 6:
+			*y_SpinCubo=*y_SpinCubo+5;	
+			if (*y_SpinCubo>360)
+				*y_SpinCubo=*y_SpinCubo-360;					
+			break;
+		default:
+			break;
+		}								
 		break;
 	case 'd':									
-		y_Spin=y_Spin-5.0;	
-		if (y_Spin<-360)
-			y_Spin=y_Spin+360.0;					
+		switch (objeto){
+		case 0:
+			y_Spin=y_Spin-5;	
+			if (y_Spin>360)
+				y_Spin=y_Spin+360;	
+			break;
+		case 3:
+			*y_SpinEsfera=*y_SpinEsfera-5;	
+			if (*y_SpinEsfera>360)
+				*y_SpinEsfera=*y_SpinEsfera+360;
+			break;
+		case 4:
+			*y_SpinToroide=*y_SpinToroide-5;	
+			if (*y_SpinToroide>360)
+				*y_SpinToroide=*y_SpinToroide+360;						
+			break;
+		case 5:
+			*y_SpinTea=*y_SpinTea-5;
+			if (*y_SpinTea>360)
+				*y_SpinTea=*y_SpinTea+360;
+			break;
+		case 6:
+			*y_SpinCubo=*y_SpinCubo-5;	
+			if (*y_SpinCubo>360)
+				*y_SpinCubo=*y_SpinCubo+360;					
+			break;
+		default:
+			break;
+		}						
 		break;
 	case 'w':
-		x_Spin=x_Spin+5.0;	
-		if (x_Spin>360.0)
-			x_Spin=x_Spin-360.0;								
+		switch (objeto){
+		case 0:
+			x_Spin=x_Spin+5;	
+			if (x_Spin>360)
+				x_Spin=x_Spin-360;	
+			break;
+		case 3:
+			*x_SpinEsfera=*x_SpinEsfera+5;	
+			if (*x_SpinEsfera>360)
+				*x_SpinEsfera=*x_SpinEsfera-360;
+			break;
+		case 4:
+			*x_SpinToroide=*x_SpinToroide+5;	
+			if (*x_SpinToroide>360)
+				*x_SpinToroide=*x_SpinToroide-360;						
+			break;
+		case 5:
+			*x_SpinTea=*x_SpinTea+5;	
+			if (*x_SpinTea>360)
+				*x_SpinTea=*x_SpinTea-360;
+			break;
+		case 6:
+			*x_SpinCubo=*x_SpinCubo+5;	
+			if (*x_SpinCubo>360)
+				*x_SpinCubo=*x_SpinCubo-360;					
+			break;
+		default:
+			break;
+		}									
 		break;
 	case 's':									
-		x_Spin=x_Spin-5.0;	
-		if (x_Spin<-360)
-			x_Spin=x_Spin+360.0;					
+		switch (objeto){
+		case 0:
+			x_Spin=x_Spin-5;	
+			if (x_Spin>360)
+				x_Spin=x_Spin+360;	
+			break;
+		case 3:
+			*x_SpinEsfera=*x_SpinEsfera-5;	
+			if (*x_SpinEsfera>360)
+				*x_SpinEsfera=*x_SpinEsfera+360;
+			break;
+		case 4:
+			*x_SpinToroide=*x_SpinToroide-5;	
+			if (*x_SpinToroide>360)
+				*x_SpinToroide=*x_SpinToroide+360;						
+			break;
+		case 5:
+			*x_SpinTea=*x_SpinTea-5;
+			if (*x_SpinTea>360)
+				*x_SpinTea=*x_SpinTea+360;
+			break;
+		case 6:
+			*x_SpinCubo=*x_SpinCubo-5;	
+			if (*x_SpinCubo>360)
+				*x_SpinCubo=*x_SpinCubo+360;					
+			break;
+		default:
+			break;
+		}						
 		break;
 	default:		
 		break;
@@ -1106,38 +1369,46 @@ void keyboard( unsigned char key, int x, int y ){
 	glutPostRedisplay();	
 }
 
+
+
+
 /*
 * Procedimiento: handleSpecialKeypress
 * Parámetros: int key, int x, int y
 * Descripción: Procedimiento que realiza las operaciones aritméticas involucradas en la tranlación del cuerpo
 * Autor: Gianni Carlo
 */
-
-
-void aumentar(GLfloat * pos){
-	*pos+=0.1f;
-}
-void disminuir(GLfloat * pos){
-	*pos-=0.1f;
-}
 void handleSpecialKeypress(int key, int x, int y) {
 	switch ( key ) {
 	case GLUT_KEY_UP:	
 		switch (objeto){
 		case 0:
-			yPosicion=yPosicion+0.1;	
-			break;
-		case 1:
-			disminuir(zPosicionCubo);					
-			break;
-		case 2:
-			disminuir(zPosicionTea);					
+			yPosicion=yPosicion-0.1;	
 			break;
 		case 3:
-			disminuir(zPosicionToroide);					
+			if(*yPosicionEsfera<7.4){
+			aumentar(yPosicionEsfera);			
+			}
 			break;
 		case 4:
-			disminuir(zPosicionEsfera);					
+			if(*yPosicionToroide<7.3){
+			aumentar(yPosicionToroide);
+			}
+			break;
+		case 5:
+			if(*yPosicionTea<7.2){
+			aumentar(yPosicionTea);
+			}
+			break;
+		case 6:
+			if(*yPosicionCubo<7.5){
+			aumentar(yPosicionCubo);
+			}
+			break;
+		case 7:
+			if(*yPosicionMastil<2.6){
+			aumentar(yPosicionMastil);
+			}
 			break;
 		default:
 			break;
@@ -1147,71 +1418,116 @@ void handleSpecialKeypress(int key, int x, int y) {
 	case GLUT_KEY_DOWN:	
 		switch (objeto){
 		case 0:
-			yPosicion=yPosicion-0.1;
-			break;
-		case 1:
-			aumentar(zPosicionCubo);
-			break;
-		case 2:
-			aumentar(zPosicionTea);					
+			yPosicion=yPosicion+0.1;
 			break;
 		case 3:
-			aumentar(zPosicionToroide);					
+			if(*yPosicionEsfera>0.75){
+			disminuir(yPosicionEsfera);
+			}
 			break;
 		case 4:
-			aumentar(zPosicionEsfera);					
+			if(*yPosicionToroide>0.95){
+			disminuir(yPosicionToroide);
+			}
+			break;
+		case 5:
+			if(*yPosicionTea>1){
+			disminuir(yPosicionTea);
+			}
+			break;
+		case 6:
+			if(*yPosicionCubo>0.85){
+			disminuir(yPosicionCubo);
+			}
+			break;
+		case 7:
+			if(*yPosicionMastil>0.3){
+			disminuir(yPosicionMastil);
+			}
 			break;
 		default:
 			break;
 		}
+
 		break;
 	case GLUT_KEY_RIGHT:
 		switch (objeto){
 		case 0:
-			xPosicion=xPosicion+0.1;			
-			break;
-		case 1:
-			aumentar(xPosicionCubo);	
-			break;
-		case 2:
-			aumentar(xPosicionTea);					
+			xPosicion=xPosicion-0.1;			
 			break;
 		case 3:
-			aumentar(xPosicionToroide);					
+			if(*xPosicionEsfera<5.5){
+			aumentar(xPosicionEsfera);
+			}
 			break;
 		case 4:
-			aumentar(xPosicionEsfera);					
+			if(*xPosicionToroide<5.1){
+			aumentar(xPosicionToroide);
+			}
+			break;
+		case 5:
+			if(*xPosicionTea<4.2){
+			aumentar(xPosicionTea);
+			}
+			break;
+		case 6:
+			if(*xPosicionCubo<5.4){
+			aumentar(xPosicionCubo);
+			}
+			break;
+		case 7:
+			if(*xPosicionMastil<5.5){
+			aumentar(xPosicionMastil);
+			}
 			break;
 		default:
 			break;
 		}
+
 		break;
 	case GLUT_KEY_LEFT:	
 		switch (objeto){
 		case 0:
-			xPosicion=xPosicion-0.1;		
-			break;
-		case 1:
-			disminuir(xPosicionCubo);
-			break;
-		case 2:
-			disminuir(xPosicionTea);					
+			xPosicion=xPosicion+0.1;
 			break;
 		case 3:
-			disminuir(xPosicionToroide);					
+			if(*xPosicionEsfera>-5.4){
+			disminuir(xPosicionEsfera);			
+			}
 			break;
 		case 4:
-			disminuir(xPosicionEsfera);					
+			if(*xPosicionCubo>-5.2){
+			disminuir(xPosicionToroide);
+			}
+			break;
+		case 5:
+			if(*xPosicionTea>-4.7){
+			disminuir(xPosicionTea);
+			}
+			break;
+		case 6:
+			if(*xPosicionCubo>-5.4){
+			disminuir(xPosicionCubo);
+			}
+			break;
+		case 7:
+			if(*xPosicionMastil>-5.45){
+			disminuir(xPosicionMastil);		
+			}
 			break;
 		default:
+
 			break;
 		}
+
 		break;
 	default:									
 		break;
 	}
 	glutPostRedisplay();
 }
+
+
 
 GLuint LoadTexture( const char * filename, int width, int height )
 {
@@ -1230,18 +1546,7 @@ GLuint LoadTexture( const char * filename, int width, int height )
     glBindTexture( GL_TEXTURE_2D, texture ); //bind the textureto it’s array
     glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,GL_MODULATE ); //set texture environment parameters
 
-    //here we are setting what textures to use and when. The MINfilter is which quality to show
-    //when the texture is near the view, and the MAG filter is whichquality to show when the texture
-    //is far from the view.
 
-    //The qualities are (in order from worst to best)
-    //GL_NEAREST
-    //GL_LINEAR
-    //GL_LINEAR_MIPMAP_NEAREST
-    //GL_LINEAR_MIPMAP_LINEAR
-
-    //And if you go and use extensions, you can use Anisotropic filtering textures which are of an
-    //even better quality, but this will do for now.
     glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,GL_LINEAR );
     glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,GL_LINEAR );
 
@@ -1271,13 +1576,23 @@ void cambiarTextura (int val)
 		case 0:			
 			texturaSeleccionada=&noTextura;
 		break;
-		case 1:
-				cout<<"text1\n";
+		case 1:				
 			texturaSeleccionada=&textura1;
 			break;
-		case 2:
-			cout<<"text2\n";
+		case 2:			
 			texturaSeleccionada=&textura2;
+			break;
+		case 3:			
+			texturaSeleccionada=&textura3;
+			break;
+		case 4:			
+			texturaSeleccionada=&textura4;
+			break;
+		case 5:			
+			texturaSeleccionada=&textura5;
+			break;
+		case 6:			
+			texturaSeleccionada=&textura6;
 			break;
 		default:
 			break;
@@ -1307,7 +1622,6 @@ void cambiarTextura (int val)
 		default:
 			break;
 	}
-//	glutPostRedisplay();
     
 }
 void setupMenus(){
@@ -1322,8 +1636,6 @@ void setupMenus(){
 	glutAddMenuEntry("Textura 4", 4);
 	glutAddMenuEntry("Textura 5", 5);
 	glutAddMenuEntry("Textura 6", 6);
-	glutAddMenuEntry("Textura 7", 7);
-	glutAddMenuEntry("Textura 8", 8);
   glutAttachMenu(GLUT_RIGHT_BUTTON);
  
 }
@@ -1359,7 +1671,7 @@ int main( int argc, char** argv )
 	GLfloat x_SpinToroideV=0.0f;
 	GLfloat y_SpinToroideV=0.0f;
 	GLfloat z_SpinToroideV=0.0f;
-	GLfloat xPosicionToroideV= 3.0f;
+	GLfloat xPosicionToroideV= 2.0f;
 	GLfloat yPosicionToroideV= 3.0f;
 	GLfloat zPosicionToroideV= 3.0f;
 
@@ -1374,9 +1686,9 @@ int main( int argc, char** argv )
 	GLfloat x_SpinCuboV=0.0f;
 	GLfloat y_SpinCuboV=0.0f;
 	GLfloat z_SpinCuboV=0.0f;
-	GLfloat xPosicionCuboV = 0.0f;
+	GLfloat xPosicionCuboV = -1.0f;
 	GLfloat yPosicionCuboV = 3.0f;
-	GLfloat zPosicionCuboV = 3.0f;
+	GLfloat zPosicionCuboV = 5.0f;
 
 	x_SpinCubo=&x_SpinCuboV;
 	y_SpinCubo=&y_SpinCuboV;
@@ -1391,7 +1703,7 @@ int main( int argc, char** argv )
 	GLfloat z_SpinTeaV=0.0f;
 	GLfloat xPosicionTeaV= 0.0f;
 	GLfloat yPosicionTeaV= 3.0f;
-	GLfloat zPosicionTeaV= 0.0f;
+	GLfloat zPosicionTeaV= 2.0f;
 
 	x_SpinTea=&x_SpinTeaV;
 	y_SpinTea=&y_SpinTeaV;
@@ -1404,9 +1716,9 @@ int main( int argc, char** argv )
 	GLfloat x_SpinMastilV=0.0f;
 	GLfloat y_SpinMastilV=0.0f;
 	GLfloat z_SpinMastilV=0.0f;
-	GLfloat xPosicionMastilV= 5.0f;
+	GLfloat xPosicionMastilV= 4.0f;
 	GLfloat yPosicionMastilV= 0.0f;
-	GLfloat zPosicionMastilV= 0.0f;
+	GLfloat zPosicionMastilV= 5.0f;
 
 	x_SpinMastil=&x_SpinMastilV;
 	y_SpinMastil=&y_SpinMastilV;
@@ -1443,8 +1755,12 @@ int main( int argc, char** argv )
 	
 	glutMouseFunc(mouse);
 	setupMenus();
-	textura1 = LoadTexture( "textura4.bmp", 200,200);
-	textura2 = LoadTexture( "textura1.bmp", 200,200);
+	textura1 = LoadTexture( "textura1.bmp", 200,200);
+	textura2 = LoadTexture( "textura2.bmp", 200,200);
+	textura3 = LoadTexture( "textura3.bmp", 200,200);
+	textura4 = LoadTexture( "textura4.bmp", 200,200);
+	textura5 = LoadTexture( "textura5.bmp", 200,200);
+	textura6 = LoadTexture( "textura6.bmp", 200,200);
 
 	texturaBlancas=&noTextura;
 	texturaNegras=&noTextura;
